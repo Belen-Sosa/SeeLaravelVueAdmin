@@ -59,24 +59,27 @@ class SubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
+    public function edit(Subject $subject)
+    { $teachers= Teacher::all();
+        $careers= Career::all();
+        return inertia('Subjects/edit',['subject'=> $subject,'teachers'=>$teachers,'careers'=>$careers]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SubjectRequest $request, Subject $subject)
     {
-        //
+        $subject->update($request->validated());
+        return redirect()->route('subjects.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Subject $subject)
     {
-        //
+        $subject->delete();
+        return redirect()->route('subjects.index');
     }
 }
