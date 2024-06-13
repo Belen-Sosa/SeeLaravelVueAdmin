@@ -10,6 +10,7 @@ import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
     name: '',
+    career_id:'',
     email: '',
     password: '',
     password_confirmation: '',

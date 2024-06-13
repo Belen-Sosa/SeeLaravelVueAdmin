@@ -72,7 +72,7 @@ const logout = () => {
                             </div>
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read student')">
-                                <NavLink :href="route('users.index')" :active="route().current('users.*')">
+                                <NavLink :href="route('students.index')" :active="route().current('students.*')">
                                     Alumnos
                                 </NavLink>
                             </div>
