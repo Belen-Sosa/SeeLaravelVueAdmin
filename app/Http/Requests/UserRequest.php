@@ -23,7 +23,15 @@ class UserRequest extends FormRequest
     public function rules(): array
     {   
        // Obtiene el ID del usuario desde la ruta
-       $userId = $this->route('student') ? $this->route('student')->id : null;
+
+       if($this->route('student')){
+        $userId=$this->route('student')->id;
+       } if($this->route('administrator')){
+            $userId=$this->route('administrator');}
+        else{
+        $userId=null;
+       }
+     
 
        
     
@@ -48,7 +56,7 @@ class UserRequest extends FormRequest
     {
         return [
 
-            'name.unique'=>_('EL nombre del alumno ya existe.'),
+            'name.unique'=>_('EL nombre del usuario ya existe.'),
             'email.unique'=>_('El correo ingresado ya se encuentra registrado.')
             
         ];

@@ -8,7 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Survey extends Model
 {
     use HasFactory;
+    
 
+
+    protected $fillable = [
+        'user_id',
+        'title',
+        'career_id',
+        'subject_id',
+        'description',
+        'estate',
+        'start_date',
+        'final_date',
+    ];
        //una encuesta puede tener muchas preguntas 
        public function question()
        {

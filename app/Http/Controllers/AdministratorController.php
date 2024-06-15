@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 use Spatie\Permission\Models\Role;
 
-class StudentController extends Controller
+class AdministratorController extends Controller
 {
      //paginando el numero de lecciones 
      const NUMBER_OF_ITEMS_PER_PAGE= 25;
@@ -21,19 +21,19 @@ class StudentController extends Controller
      public function index()
      {
           // Obtener el rol "estudiantes"
-          $role = Role::where('name', 'student')->first();
+          $role = Role::where('name', 'admin')->first();
 
               // Verificar si el rol existe
              if ($role) {
 
-                $students = User::role('student')
+                $admins = User::role('admin')
                     ->with('career')
                     ->paginate(self::NUMBER_OF_ITEMS_PER_PAGE);
                 }
             
     
-            return Inertia('Students/index', [
-                'students' => $students
+            return Inertia('Administrators/index', [
+                'admins' => $admins
             ]);
      }
     /**
@@ -44,7 +44,7 @@ class StudentController extends Controller
        
         $careers= Career::all();
         
-        return inertia('Students/create',['role'=>'student','careers'=>$careers]);
+        return inertia('Administrators/create',['role'=>'admin','careers'=>$careers]);
     }
 
     /**
@@ -58,11 +58,11 @@ class StudentController extends Controller
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         //creamos el usuario 
-           User::create(  $validatedData )->assignRole('student');
+           User::create(  $validatedData )->assignRole('admin');
 
     
 
-        return redirect()->route('students.index');
+        return redirect()->route('administrators.index');
     }
 
     /**
@@ -76,30 +76,32 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $student )
+    public function edit($adminId)
     {
-    
+  
+        $admin = User::findOrFail($adminId);
         $careers= Career::all();
        
 
-        return inertia('Students/edit',['student'=> $student,'careers'=>$careers]);
+        return inertia('Administrators/edit',['admin'=> $admin,'careers'=>$careers]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserRequest $request, User $student)
-    {
-        $student->update($request->validated());
-        return redirect()->route('students.index');
+    public function update(UserRequest $request, $adminId)
+    {  $admin = User::findOrFail($adminId);
+        $admin->update($request->validated());
+        return redirect()->route('administrators.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $student)
+    public function destroy($adminId)
     {
-        $student->delete();
-        return redirect()->route('students.index');
+        $admin = User::findOrFail($adminId);
+        $admin->delete();
+        return redirect()->route('administrators.index');
     }
 }

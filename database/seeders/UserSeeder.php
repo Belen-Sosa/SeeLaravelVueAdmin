@@ -16,16 +16,16 @@ class UserSeeder extends Seeder
     {
         
         $admin = User ::create([
-             'name' => 'admin',
+             'name' => 'root',
              'career_id'=>1,
-             'email'=> 'admin@gmail.com',
-             'password' =>Hash::make('admin')
+             'email'=> 'root@gmail.com',
+             'password' =>Hash::make('root')
 
         ]);
         
 
         //asignamos el rol del usuario , los roles asignados y creeados se pueden ver en RoleSeeder
 
-        $admin->assignRole('admin');
+        $admin->assignRole('root');
     }
 }

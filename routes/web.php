@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdministratorController;
 use App\Http\Controllers\CareerController;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\DashboardController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // No auth Routes
 Route::get('/',[DashboardController::class,'index']);
 
-//aplicamos el middleware para las rutas que necesitamos que el usuario este autentificado para acceder
+//aplicamos el middleware para las rutas que necesitamos
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'),  'verified',
 ])->group(function () {
     //Auth Routes
@@ -34,7 +35,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),  'verified'
     Route::resource('/teachers',TeacherController::class);
     Route::resource('/types_question',TypeQuestionController::class);
     Route::resource('/students',StudentController::class);
-    Route::resource('/administrators',UserController::class);
+    Route::resource('/administrators',AdministratorController::class);
     Route::resource('/users',UserController::class);
 
 });

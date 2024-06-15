@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('survey', function (Blueprint $table) {
+        Schema::create('surveys', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('title');
@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('subject_id');
             $table->text('description');
             $table->boolean('estate');
-            $table->date('start_date');
-            $table->date('final_date');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('final_date')->nullable();
             $table->timestamps();
 
             

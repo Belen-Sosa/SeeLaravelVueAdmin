@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
 
             
-            $table->foreign('survey_id')->references('id')->on('survey');
+            $table->foreign('survey_id')->references('id')->on('surveys');
             
             $table->foreign('type_question_id')->references('id')->on('types_questions');
         });

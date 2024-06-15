@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('subject_survey', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_subject');
-            $table->unsignedBigInteger('id_survey');
-            $table->timestamps();
+            $table->unsignedBigInteger('survey_id');
+            $table->unsignedBigInteger('subject_id');
+          
         });
     }
 

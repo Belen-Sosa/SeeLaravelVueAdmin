@@ -14,17 +14,17 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
+        $role_root= Role::create(['name'=>'root']);
         $role_admin= Role::create(['name'=>'admin']);
-        $role_creator= Role::create(['name'=>'creator']);
         $role_student= Role::create(['name'=>'student']);
 
         //creando permisos y sus nombres 
         //permiso creacion de usuarios 
 
-        $permission_create_user= Permission::create(['name'=>'create user']) ;  
-        $permission_read_user= Permission::create(['name'=>'read user']) ;     
-        $permission_update_user= Permission::create(['name'=>'update user']) ;
-        $permission_delete_user= Permission::create(['name'=>'delete user']) ;
+        $permission_create_admin= Permission::create(['name'=>'create admin']) ;  
+        $permission_read_admin= Permission::create(['name'=>'read admin']) ;     
+        $permission_update_admin= Permission::create(['name'=>'update admin']) ;
+        $permission_delete_admin= Permission::create(['name'=>'delete admin']) ;
         //permisos carreras
 
         
@@ -96,8 +96,8 @@ class RoleSeeder extends Seeder
         $permission_update_option= Permission::create(['name'=>'update option']) ;
         $permission_delete_option= Permission::create(['name'=>'delete option']) ;
     
-        $permissions_admin =[
-            $permission_create_user,  $permission_read_user,  $permission_update_user,  $permission_delete_user,
+        $permissions_root =[
+            $permission_create_admin,  $permission_read_admin,  $permission_update_admin,  $permission_delete_admin,
          $permission_create_career, $permission_read_career, $permission_update_career,  $permission_delete_career,
          $permission_create_teacher, $permission_read_teacher, $permission_update_teacher,  $permission_delete_teacher,
          $permission_create_subject, $permission_read_subject, $permission_update_subject,$permission_delete_subject,
@@ -109,7 +109,7 @@ class RoleSeeder extends Seeder
 
         ];
 
-        $permission_creator=[
+        $permission_admin=[
         
             $permission_create_teacher, $permission_read_teacher, $permission_update_teacher,  
             $permission_create_subject, $permission_read_subject, $permission_update_subject,
@@ -130,8 +130,8 @@ class RoleSeeder extends Seeder
 
         //asignando permisos
 
-        $role_admin->syncPermissions($permissions_admin);
-        $role_creator->syncPermissions($permission_creator);
+        $role_root->syncPermissions($permissions_root);
+        $role_admin->syncPermissions($permission_admin);
         $role_student->syncPermissions($permissions_student); 
 
     }

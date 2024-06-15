@@ -76,6 +76,12 @@ const logout = () => {
                                     Alumnos
                                 </NavLink>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read admin')">
+                                <NavLink :href="route('administrators.index')" :active="route().current('admins.*')">
+                                    Administradores
+                                </NavLink>
+                            </div>
+
 
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" v-if="$page.props.user.permissions.includes('read survey')">
                                 <NavLink :href="route('surveys.index')" :active="route().current('surveys.*')">
