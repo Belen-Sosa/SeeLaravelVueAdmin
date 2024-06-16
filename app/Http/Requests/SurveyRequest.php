@@ -14,17 +14,32 @@ class SurveyRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        if ($this->has('final_date')) {
+     
+        if( $this->isMethod('post') ){
+            if ($this->has('final_date')) {
+                $this->merge([
+                    'final_date' => DateTime::createFromFormat('Y-m-d\TH:i', $this->final_date)->format('Y-m-d H:i'),
+                ]);
+            }
             $this->merge([
-                'final_date' => DateTime::createFromFormat('Y-m-d\TH:i', $this->final_date)->format('Y-m-d H:i'),
+                'user_id' => $this->user()->id,
+                'start_date' => (new DateTime())->format('Y-m-d H:i'),
+                'estate' => 0,
+            ]);
+        }else{
+            if ($this->has('final_date')) {
+                $this->merge([
+                    'final_date' => DateTime::createFromFormat('Y-m-d H:i:s', $this->final_date)->format('Y-m-d H:i'),
+                ]);
+            }
+            $this->merge([
+                'user_id' => $this->user()->id,
+         
             ]);
         }
+       
 
-        $this->merge([
-            'user_id' => $this->user()->id,
-            'start_date' => (new DateTime())->format('Y-m-d H:i'),
-            'estate' => 0,
-        ]);
+      
     }
 
 
@@ -36,15 +51,15 @@ class SurveyRequest extends FormRequest
     public function rules(): array
     { 
        
-        
+      
             return [
                 'user_id' => ['required', 'integer'],
                 'title'=> ['required','string','max:100'],
-                'career_id'=> ['required','exists:careers,id'],
-                'subject_id'=> ['required','exists:subjects,id'],
+                'career_id'=> [ $this->isMethod('post') ? 'required' : 'nullable','exists:careers,id'],
+                'subject_id'=> [ $this->isMethod('post') ? 'required' : 'nullable','exists:subjects,id'],
                 'description'=> ['required','string','max:100'],
-                'estate' => ['required', 'integer'],
-                'start_date' => ['required', 'date_format:Y-m-d H:i'],
+                'estate' => [ $this->isMethod('post') ? 'required' : 'nullable', 'integer'],
+                'start_date' => [ $this->isMethod('post') ? 'required' : 'nullable', 'date_format:Y-m-d H:i'],
                 'final_date' => ['required','date_format:Y-m-d H:i'],
                 
                 

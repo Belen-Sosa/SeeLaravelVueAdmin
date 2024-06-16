@@ -32,10 +32,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),  'verified'
     Route::resource('/result' ,ResultController::class);
     Route::resource('/subjects',SubjectController::class);
     Route::resource('/surveys',SurveyController::class);
+    Route::put('/surveys/{id}/state', [SurveyController::class, 'updateState'])->name('surveys.updateState');
+
     Route::resource('/teachers',TeacherController::class);
     Route::resource('/types_question',TypeQuestionController::class);
     Route::resource('/students',StudentController::class);
     Route::resource('/administrators',AdministratorController::class);
     Route::resource('/users',UserController::class);
+
 
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StateRequest;
 use App\Http\Requests\SurveyRequest;
 use App\Models\Career;
 use App\Models\Subject;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Log;
+
 
 class SurveyController extends Controller
 {   
@@ -69,17 +71,62 @@ class SurveyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Survey $survey)
     {
-        //
+    
+        return inertia('Surveys/edit',['survey'=> $survey]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SurveyRequest $SurveyRequest, Survey $survey)
     {
-        //
+        $data=$SurveyRequest->validated();
+        Log::info('datos en el controller');
+        Log::info($data);
+        Log::info('datos de la survey');
+        Log::info($survey);
+        $survey->update($data);
+        return redirect()->route('surveys.index');
+    }
+
+    public function updateState( StateRequest $request, $id)
+    
+    {  
+        $survey = Survey::findOrFail($id);
+         Log::info('Entramos aquii');
+        Log::info($survey);
+        try {
+        // Validar y actualizar el estado de la encuesta
+        $validatedData = $request->validated();
+       // $survey->estate = $validatedData['estate'];
+       Log::info($validatedData);
+     
+       if( $survey->update(['estate' => $validatedData['estate']])){
+            // Log para verificar si la solicitud está llegando al controlador
+            Log::info('Estado actualizado correctamente');
+       }else{
+        Log::info('no se pudo, segui intentando');
+       }
+           
+
+      
+
+        return redirect()->route('surveys.index');
+    } catch (\Exception $e) {
+        // Manejo de errores si ocurre alguna excepción
+        
+        
+        Log::error('Error al actualizar el estado de la encuesta: ' . $e->getMessage());
+                
+                
+        // Puedes retornar un error o redirigir a una página de error
+                
+            
+        return back()->withError('Error al actualizar el estado de la encuesta');
+      }
+  
     }
 
     /**
