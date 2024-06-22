@@ -14,10 +14,8 @@ class DatabaseSeeder extends Seeder
     {
       //llamamos a los seeders necesarios para la carga principal.
       $this->call([
-        CareerSeeder::class,
-        RoleSeeder::class,
-        UserSeeder::class
-
+        TypeQuestionSeeder::class,
+     
       ]);
     }
 }

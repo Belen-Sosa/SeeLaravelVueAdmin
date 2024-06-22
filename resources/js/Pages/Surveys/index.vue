@@ -127,7 +127,7 @@ const updateState = (id, newState) => {
                         <div class="py-1" role="none">
                       
                           <a  :href="route('surveys.edit',survey.id)"  v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50 " role="menuitem" tabindex="-1">Modificar</a>
-                          <a href="#" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50" role="menuitem" tabindex="-1">Agregar Preguntas</a>
+                          <a  :href="route('questions.show',survey.id)" v-if="$page.props.user.permissions.includes('create question')" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50" role="menuitem" tabindex="-1">Agregar Preguntas</a>
                           <a href="#"  @click="deleteSurvey(survey.id)"  v-if="$page.props.user.permissions.includes('delete survey')" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50" role="menuitem" tabindex="-1">Borrar</a>
                           <a href="#" @click="() => updateState(survey.id, 1)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">Publicar</a>
                            <a href="#" @click="() => updateState(survey.id, 0)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">Finalizar</a>

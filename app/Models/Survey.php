@@ -22,7 +22,7 @@ class Survey extends Model
         'final_date',
     ];
        //una encuesta puede tener muchas preguntas 
-       public function question()
+       public function questions()
        {
            return $this->hasMany(Question::class);
        }
