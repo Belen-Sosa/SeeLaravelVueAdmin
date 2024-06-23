@@ -39,7 +39,7 @@ class QuestionController extends Controller
         Log::info($request);
         Question::create($request->validated());
           // Encuentra la encuesta por el ID proporcionado y la devuelve con sus preguntas
-          $survey_questions = Survey::with('questions')
+          $survey_questions = Survey::with('questions.typeQuestion')
           ->findOrFail($request->survey_id);
 
           $type_questions= TypeQuestion::all();
@@ -56,27 +56,38 @@ class QuestionController extends Controller
            ->findOrFail($survey_id);
 
            $type_questions= TypeQuestion::all();
-           Log::info('datos de la survey y sus questions en la survey_questions');
+          /* Log::info('datos de la survey y sus questions en la survey_questions');
            Log::info($survey_questions);
 
-    
-            return inertia('Questions/index', ['survey_questions' => $survey_questions, 'type_questions'=> $type_questions]);
+           */
+
+           return inertia('Questions/index', ['survey_questions' => $survey_questions, 'type_questions'=> $type_questions]);
+
+          
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit( Question $question)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(QuestionRequest $request,$id)
     {
-        //
+
+        Log::info('datos de la question ');
+
+        $question = Question::findOrFail($id);
+           Log::info($question);
+
+           Log::info("datos del request");
+           Log::info($request);
+        $question->update($request->validated());
     }
 
     /**

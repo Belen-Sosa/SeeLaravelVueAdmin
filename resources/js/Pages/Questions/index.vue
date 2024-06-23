@@ -10,7 +10,7 @@ import {Inertia} from '@inertiajs/inertia'
 import { useForm } from '@inertiajs/vue3';
 import FormQuestion from "@/Components/Surveys/FormQuestion.vue";
 import Modal from "@/Components/Modal.vue"
-import { ref } from "vue";
+
 
 
 const props= defineProps({
@@ -24,19 +24,18 @@ const props= defineProps({
         type:Object,
         required: true
     },
-   
+
    
 })
 
 const form = useForm({
+  
     survey_id:props.survey_questions.id,
-    title:'',
-    type_question_id:'',
+    title:"",
+    type_question_id:"",
  
    
 })
-
-
 
 
 //utilizamos el confirm de js para asegurarnos de la accion y si es asi inertia hace una solicitud de delete
@@ -46,9 +45,11 @@ const deleteQuestion= id =>{
     }
 }
 
-
-
-
+const handleEdit = (question, updatedData) => {
+    form.title = updatedData.title;
+    form.type_question_id = question.type_question.id;
+    form.put(route('questions.update', question.id));
+};
 
 </script>
 <template>
@@ -85,8 +86,6 @@ const deleteQuestion= id =>{
                         <tr>
                             <th scope="col" class="px-6 py-4">Titulo</th>
                             <th scope="col" class="px-6 py-4">Tipo de pregunta</th>
-                         
-                       
                             <th></th>
                             <th></th>
                             <th></th>
@@ -99,10 +98,14 @@ const deleteQuestion= id =>{
                        
                       
                             <td  class="whitespace-nowrap px-6 py-4"> <Link class="py-2 px-4" :href="route('options.index',question.id)"  v-if="$page.props.user.permissions.includes('create option')" >Agregar Opcion </Link></td>
-                            <td>  <Link class="py-2 px-4" :href="route('questions.edit',question.id)"  v-if="$page.props.user.permissions.includes('update question')" >Editar </Link></td>
+                            <td>  <FormQuestion  v-if="$page.props.user.permissions.includes('update question')" 
+                                 :updating="true" :form="form" :survey_id="survey_questions.id" :type_questions="type_questions"
+                                  @submitEdit="handleEdit(question,$event)"></FormQuestion>
+                            </td>
+                                
+                             
                             <td> <Link class="py-2 px-4 text-red-600" @click="deleteQuestion(question.id)"  v-if="$page.props.user.permissions.includes('delete question')"> Borrar</Link></td>
-                         
-                     
+                           
                     
                        </tr>
 

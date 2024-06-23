@@ -1,17 +1,14 @@
   
   <script  setup>
-  import { ref } from 'vue'
-  import { FwbButton, FwbModal } from 'flowbite-vue'
-
+  import { ref,watch } from 'vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 import Modal from "@/Components/Modal.vue"
-
 import FormSection from '@/Components/FormSection.vue'
 import SecondaryButton from '../SecondaryButton.vue'
-
+import { useForm } from '@inertiajs/vue3'
 
 
 
@@ -32,13 +29,20 @@ const props=defineProps({
         required:true,
    
     },
+ 
     type_questions:{
         type:Object,
         required: true
     }
 })
 
-defineEmits(['submit'])
+
+
+
+
+const emit =  defineEmits(['submit'],['submitEdit'])
+
+
 const openModal = () => {
     showModal.value = true;
 };
@@ -48,7 +52,27 @@ const closeModal = () => {
 };
 
 
+
+
 const showModal = ref(false);
+
+const handleSubmit = () => {
+    const formData = {
+        title: props.form.title,
+       
+    };
+    if (props.updating) {
+        closeModal();
+        emit('submitEdit', formData);
+    
+    } else {
+        closeModal();
+        emit('submit', formData);
+        
+    }
+};
+
+
 
 
   </script>
@@ -60,12 +84,12 @@ const showModal = ref(false);
 
 
 
-    <button @click="openModal" class="text-white bg-indigo-500 hover:bg-indigo-700 py-2 px-4 rounded">Agregar Pregunta</button>
+    <button @click="openModal">{{  updating? "Editar ": "Agregar Pregunta"}} </button>
 
 <Modal :show="showModal" @close="closeModal" maxWidth="2xl" closeable>
     <!-- Contenido del modal -->
     <div class="p-4">
-      <FormSection @submitted="$emit('submit')">
+      <FormSection @submitted="handleSubmit(form.title)">
         <template #title>{{  updating? "Editar Pregunta": "Crear Nueva Pregunta"}} </template>
         <template #description> {{ updating? "Editando el registro de la Pregunta seleccionada":"Creando un nuevo registro de Pregunta" }}</template>
         <template #form>
@@ -85,7 +109,9 @@ const showModal = ref(false);
 
         </template>
         <template #actions>
-            <PrimaryButton>
+
+          
+            <PrimaryButton >
                 {{ updating? 'Actualizar': 'Crear'}}
             </PrimaryButton>
 
@@ -95,7 +121,8 @@ const showModal = ref(false);
         </template>
     </FormSection>
   
-    <SecondaryButton  @click="closeModal">
+    
+    <SecondaryButton @click="closeModal">
              cerrar
     </SecondaryButton>
         
