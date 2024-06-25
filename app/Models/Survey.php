@@ -38,10 +38,10 @@ class Survey extends Model
         return $this->belongsTo(Career::class);
     }
 
-     // una materia puede tener varias materias
+     // una encuesta puede tener una materia
      public function subject()
      {
-     return $this->belongsToMany(Subject::class);
+     return $this->belongsTo(Subject::class);
      }
 
 }

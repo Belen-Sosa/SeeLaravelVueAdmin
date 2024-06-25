@@ -56,8 +56,8 @@ class SurveyController extends Controller
         Log::info('datos en el controller');
         Log::info($data);
         Survey::create( $data);
-
         return redirect()->route('surveys.index');
+        
     }
 
     /**
@@ -65,7 +65,15 @@ class SurveyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        Log::info('estamos en el survey show');
+        
+        // Cargar la encuesta junto con sus preguntas y las opciones de cada pregunta
+        $survey = Survey::with(['career', 'subject', 'questions.options'])->findOrFail($id);
+
+        Log::info($survey);
+        
+        // Devolver los datos a la vista
+        return inertia('Surveys/showSurvey', ['survey' => $survey]);
     }
 
     /**

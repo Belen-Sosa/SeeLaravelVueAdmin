@@ -16,7 +16,8 @@ defineProps({
     surveys:{
         type: Object,
         required: true
-    } 
+    } ,
+    default:true
    
 })
 
@@ -132,7 +133,7 @@ const updateState = (id, newState) => {
                           <a href="#" @click="() => updateState(survey.id, 1)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">Publicar</a>
                            <a href="#" @click="() => updateState(survey.id, 0)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">Finalizar</a>
                                                   
-                          <a href="#" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50" role="menuitem" tabindex="-1">Vista Previa</a>
+                          <a :href="route('surveys.show',survey.id)"   v-if="$page.props.user.permissions.includes('create survey')" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50" role="menuitem" tabindex="-1">Vista Previa</a>
                           <a href="#" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50 " role="menuitem" tabindex="-1">Resultados</a>
 
                           

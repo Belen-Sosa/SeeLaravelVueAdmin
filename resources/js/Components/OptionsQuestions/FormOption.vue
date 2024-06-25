@@ -24,27 +24,14 @@ const props=defineProps({
         default:false
     },
 
-    survey_id:{
-        type:String,
-        required:true,
-   
-    },
+  
  
-    type_questions:{
-        type:Object,
-        required: true
-    },
-    title:{
-        type:String,
-        required:false,
-   
-    },
-
+  
 })
 const cleanForm = () => {
     const formData = {
-        title: "",
-        type_question_id:"",
+        value: "",
+      
     };
     emit('cleanForm', formData);
    
@@ -58,6 +45,7 @@ const emit =  defineEmits(['submit'],['submitEdit'],['updatingForm'],['cleanForm
 
 
 const openModal = () => {
+    //para que me rellene los campos en el formulario de edicion con los datos que ya tiene el registro 
     emit('updatingForm');
     showModal.value = true;
    
@@ -77,7 +65,7 @@ const showModal = ref(false);
 
 const handleSubmit = () => {
     const formData = {
-        title: props.form.title,
+        value: props.form.value,
        
     };
     if (props.updating) {
@@ -105,27 +93,20 @@ const handleSubmit = () => {
 
 
 
-    <button @click="openModal">{{  updating? "Editar ": "Agregar Pregunta"}} </button>
+    <button @click="openModal">{{  updating? "Editar ": "Agregar Opcion"}} </button>
 
 <Modal :show="showModal" @close="closeModal" maxWidth="2xl" closeable>
     <!-- Contenido del modal -->
     <div class="p-4">
       <FormSection @submitted="handleSubmit()">
-        <template #title>{{  updating? "Editar Pregunta": "Crear Nueva Pregunta"}} </template>
-        <template #description> {{ updating? "Editando el registro de la Pregunta seleccionada":"Creando un nuevo registro de Pregunta" }}</template>
+        <template #title>{{  updating? "Editar Opcion": "Crear Nueva Opcion"}} </template>
+        <template #description> {{ updating? "Editando el registro de la Opción seleccionada":"Creando un nuevo registro de Opción" }}</template>
         <template #form>
              <div class="col-span-6 sm:col-span-6">
-                <InputLabel for="title" value="Titulo"></InputLabel>
-                <TextInput id="title" v-model="form.title" type="text"  class="mt-1 block w-full"></TextInput>
-                <InputError :message="$page.props.errors.title" class="mt-2"></InputError>
+                <InputLabel for="value" value="Valor"></InputLabel>
+                <TextInput id="value" v-model="form.value" type="text"  class="mt-1 block w-full"></TextInput>
+                <InputError :message="$page.props.errors.value" class="mt-2"></InputError>
 
-             
-
-                 <InputLabel   v-if="!updating" class="mt-2" for="type_questions" value="Tipo de Pregunta"></InputLabel>
-                 <select   v-if="!updating" id="type" v-model="form.type_question_id" class="mt-1 block w-full">
-                    <option   v-if="!updating"  v-for="type in type_questions" :value="type.id">{{ type.name }}</option>
-                 </select>
-                 <InputError  v-if="!updating"  :message="$page.props.errors.career_id"  class="mt-2"/>
              </div>
 
         </template>

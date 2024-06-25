@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: "QuestionsIndex",
+    name: "QuestionsOptionsIndex",
 };
 </script>
 <script setup>
@@ -9,59 +9,55 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import {Inertia} from '@inertiajs/inertia'
 import { useForm } from '@inertiajs/vue3';
-import FormQuestion from "@/Components/Surveys/FormQuestion.vue";
-import Modal from "@/Components/Modal.vue"
+import FormOption from "@/Components/OptionsQuestions/FormOption.vue";
 
 
 
 const props= defineProps({
 
     //aseguramos que recibimos el elemento que es un objeto y ponemos que es requerido para que todo funcione correctamente
-    survey_questions:{
+    question:{
         type: Object,
         required: true
-    } ,
-    type_questions:{
-        type:Object,
-        required: true
-    },
+    } 
+    
 
    
 })
 
 const form = useForm({
   
-    survey_id:props.survey_questions.id,
-    title:"",
-    type_question_id:"",
+    question_id:props.question.id,
+    value:"",
+
  
    
 })
-const updatingForm=question =>{
-    form.title = question.title;
-    form.type_question_id = question.type_question.id;
+const updatingForm=option =>{
+    form.value = option.value;
+    
 
 }
-const cleanForm = question => {
-    form.title = question.title;
-    form.type_question_id = question.type_question.id;
+const cleanForm = option => {
+    form.value = option.value;
+  
 };
 
 
 //utilizamos el confirm de js para asegurarnos de la accion y si es asi inertia hace una solicitud de delete
-const deleteQuestion= id =>{
-    if(confirm('¿Desea eliminar esta pregunta?')){
-        Inertia.delete(route('questions.destroy',id))
+const deleteOption= id =>{
+    if(confirm('¿Desea eliminar esta opcion?')){
+        Inertia.delete(route('options.destroy',id))
     }
 }
-const handleEdit = (question) => {
-    form.put(route('questions.update', question.id), {
+const handleEdit = (option) => {
+    form.put(route('options.update', option.id), {
         onSuccess: () => cleanForm()
     });
 };
 
 const handleSubmit = () => {
-    form.post(route('questions.store'), {
+    form.post(route('options.store'), {
         onSuccess: () => cleanForm()
     });
 };
@@ -77,7 +73,7 @@ const handleSubmit = () => {
         <!--definir el template para el slot del header -->
         <template #header>
             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-                Preguntas
+                Opciones
                 
             </h1>
 
@@ -91,15 +87,15 @@ const handleSubmit = () => {
                     <div class="flex justify-between" >
                           
                             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-                      Preguntas de la Encuesta :  {{survey_questions.title }}
+                      Opciones de la Pregunta :  {{question.title }}
                       </h1>
-                      <FormQuestion  v-if="$page.props.user.permissions.includes('create question')"  
-                      :form="form" :survey_id="survey_questions.id" :type_questions="type_questions" 
+                      <FormOption  v-if="$page.props.user.permissions.includes('create option')"  
+                      :form="form" 
                       @cleanForm="cleanForm($event)";
                       @submit="handleSubmit"
                        
                    
-                      ></FormQuestion>
+                      ></FormOption>
                       <!-- Button trigger modal -->
                       
                     </div>
@@ -110,31 +106,31 @@ const handleSubmit = () => {
                         <thead
                         class="border-b border-neutral-200 font-medium dark:border-white/10">
                         <tr>
-                            <th scope="col" class="px-6 py-4">Titulo</th>
-                            <th scope="col" class="px-6 py-4">Tipo de pregunta</th>
-                            <th></th>
+                            <th scope="col" class="px-6 py-4">Valor</th>
+                     
+            
                             <th></th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="border-b border-neutral-200 dark:border-white/10"  v-for="question in survey_questions.questions">
-                            <td class="whitespace-nowrap px-6 py-4 font-medium">  {{question.title}}</td>
-                            <td class="whitespace-nowrap px-6 py-4">  {{question.type_question.name}}</td>
+                        <tr class="border-b border-neutral-200 dark:border-white/10"  v-for="option in question.options">
+                            <td class="whitespace-nowrap px-6 py-4 font-medium">  {{option.value}}</td>
+                         
                        
                       
-                            <td  class="whitespace-nowrap px-6 py-4"> <Link class="py-2 px-4" :href="route('options.show',question.id)"  v-if="$page.props.user.permissions.includes('create option') && question.type_question_id!=3" >Agregar Opcion </Link></td>
-                            <td>  <FormQuestion  v-if="$page.props.user.permissions.includes('update question')" 
-                                 :updating="true" :form="form" :survey_id="survey_questions.id" :type_questions="type_questions"
-                                  @submitEdit="handleEdit(question,$event)" 
-                                  @updatingForm="updatingForm(question)"
+                       
+                            <td>  <FormOption  v-if="$page.props.user.permissions.includes('update option')" 
+                                 :updating="true" :form="form" :question_id="question.id" 
+                                  @submitEdit="handleEdit(option,$event)" 
+                                  @updatingForm="updatingForm(option)"
                                   @cleanForm="cleanForm($event)";
-                                  ></FormQuestion>
+                                  ></FormOption>
                                   
                             </td>
                                 
                              
-                            <td> <Link class="py-2 px-4 text-red-600" @click="deleteQuestion(question.id)"  v-if="$page.props.user.permissions.includes('delete question')"> Borrar</Link></td>
+                            <td> <Link class="py-2 px-4 text-red-600" @click="deleteOption(option.id)"  v-if="$page.props.user.permissions.includes('delete option')"> Borrar</Link></td>
                            
                     
                        </tr>

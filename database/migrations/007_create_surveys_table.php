@@ -25,9 +25,9 @@ return new class extends Migration
 
             
             
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('career_id')->references('id')->on('careers');
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');;
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');;
         });
     }
 
