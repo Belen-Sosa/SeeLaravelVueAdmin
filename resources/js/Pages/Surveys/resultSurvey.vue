@@ -38,16 +38,14 @@ const props = defineProps({
   }
 });
 
-const questions = ref([]);
-const textQuestionsRef = ref([]);
+
 const dataResponses= ref([]);
 onMounted(() => {
   transformSurveyData(props.data);
 });
 
 function transformSurveyData(survey) {
-  const formattedQuestions = [];
-  const textQuestions = [];
+
   const data=[];
  
 
@@ -66,12 +64,7 @@ function transformSurveyData(survey) {
         }
       });
 
-      formattedQuestions.push({
-        text: question.title,
-        labels,
-        data: resultsCount
-
-      });
+   
       data.push({
         type: "graphic",
         text: question.title,
@@ -83,10 +76,6 @@ function transformSurveyData(survey) {
       // Procesar preguntas de texto
       const responses = question.results.map(result => result.text).filter(text => text !== null);
 
-      textQuestions.push({
-        text: question.title,
-        responses
-      });
       data.push({
         type: "text",
         text: question.title,
@@ -97,8 +86,7 @@ function transformSurveyData(survey) {
   });
 
   // Actualizar los valores reactivos de Vue
-  questions.value = formattedQuestions;
-  textQuestionsRef.value = textQuestions; // Actualizar la ref correcta
+
   dataResponses.value= data;
 }
 </script>
