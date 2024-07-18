@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('option_id');
-            $table->text('comments');
+            $table->unsignedBigInteger('question_id');
+            $table->unsignedBigInteger('option_id')->nullable();
+            $table->text('text')->nullable();
             $table->timestamps();
             
             
             $table->foreign('option_id')->references('id')->on('options');
+            $table->foreign('question_id')->references('id')->on('questions');
         });
     }
 

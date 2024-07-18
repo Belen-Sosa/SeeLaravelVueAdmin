@@ -12,7 +12,12 @@ class Result extends Model
     protected $guarded=[];
 
     //un resultado pertenece a una opcion
-public function option(){
-    return $this->belongsTo(Option::class);
-}
+    public function option(){
+        return $this->belongsTo(Option::class);
+    }
+    
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 }

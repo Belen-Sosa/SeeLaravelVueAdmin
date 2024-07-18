@@ -134,7 +134,7 @@ const updateState = (id, newState) => {
                            <a href="#" @click="() => updateState(survey.id, 0)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" role="menuitem" tabindex="-1">Finalizar</a>
                                                   
                           <a :href="route('surveys.show',survey.id)"   v-if="$page.props.user.permissions.includes('create survey')" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50" role="menuitem" tabindex="-1">Vista Previa</a>
-                          <a href="#" class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50 " role="menuitem" tabindex="-1">Resultados</a>
+                          <a :href="route('result.show',survey.id)"  class="block px-4 py-2 text-sm text-gray-700  hover:bg-gray-50 " role="menuitem" tabindex="-1">Resultados</a>
 
                           
                         </div>

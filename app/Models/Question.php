@@ -19,19 +19,25 @@ class Question extends Model
 
      //una pregunta puede tener muchas opciones 
     public function options()
-{
-    return $this->hasMany(Option::class);
-}
+    {
+        return $this->hasMany(Option::class);
+    }
 
-//un pregunta solo pertenece a un tipo de pregunta
+    //un pregunta solo pertenece a un tipo de pregunta
 
-public function typeQuestion(){
-        
-    return $this->belongsTo(TypeQuestion::class, 'type_question_id');
-}
+    public function typeQuestion(){
+            
+        return $this->belongsTo(TypeQuestion::class, 'type_question_id');
+    }
 
-//una pregunta pertenece a una encuesta
-public function survey(){
-    return $this->belongsTo(Survey::class);
-}
+    //una pregunta pertenece a una encuesta
+    public function survey(){
+        return $this->belongsTo(Survey::class);
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
 }

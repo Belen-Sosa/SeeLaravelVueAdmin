@@ -29,7 +29,10 @@ const logout = () => {
 
 <template>
     <div>
-        <Head :title="title" />
+        <Head :title="title">
+            
+          
+        </Head> 
 
         <Banner />
 
