@@ -15,6 +15,7 @@ class SurveyRequest extends FormRequest
     protected function prepareForValidation()
     {
      
+        Log::info($this->all()); 
         if( $this->isMethod('post') ){
             if ($this->has('final_date')) {
                 $this->merge([
@@ -29,7 +30,7 @@ class SurveyRequest extends FormRequest
         }else{
             if ($this->has('final_date')) {
                 $this->merge([
-                    'final_date' => DateTime::createFromFormat('Y-m-d H:i:s', $this->final_date)->format('Y-m-d H:i'),
+                    'final_date' => DateTime::createFromFormat('Y-m-d\TH:i', $this->final_date)->format('Y-m-d H:i'),
                 ]);
             }
             $this->merge([

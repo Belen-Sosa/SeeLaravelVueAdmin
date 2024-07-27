@@ -11,11 +11,17 @@ class Subject extends Model
 
     protected $guarded= [];
 
-    //una materia puede estar en muchas inscripciones 
+    /*una materia puede estar en muchas inscripciones 
     public function registration()
     {
         return $this->belongsToMany(Registration::class);
+    }*/
+    public function registrations()
+    {
+
+        return $this->belongsToMany(User::class, 'registrations', 'subject_id', 'user_id') -> withPivot('career_id') -> as('registration') ->withTimestamps();
     }
+
 
      //una materia puede pertenecer a un profesor
      public function teacher()
@@ -33,5 +39,12 @@ class Subject extends Model
      public function survey()
      {
      return $this->belongsToMany(Survey::class);
+     }
+
+
+     public function users()
+     {
+         return $this->belongsToMany(User::class, 'registrations', 'subject_id', 'user_id')
+                     ->withPivot('career_id');
      }
 }

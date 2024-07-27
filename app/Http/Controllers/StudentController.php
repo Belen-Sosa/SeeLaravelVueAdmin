@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\Career;
+use App\Models\Registration;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -43,8 +44,10 @@ class StudentController extends Controller
     {
        
         $careers= Career::all();
+        $subjects= Career::with('subjects')->get();
+   
         
-        return inertia('Students/create',['role'=>'student','careers'=>$careers]);
+        return inertia('Students/create',['role'=>'student','careers'=>$careers,'subjects'=>$subjects]);
     }
 
     /**
@@ -52,15 +55,39 @@ class StudentController extends Controller
      */
     public function store(UserRequest $UserRequest)
     {
+
+        
+         
         //esto obtiene los datos validados del 'UserRequest'
         $validatedData = $UserRequest->validated();
         //encriptamos la contraseña antes del guardado
         $validatedData['password'] = Hash::make($validatedData['password']);
 
-        //creamos el usuario 
-           User::create(  $validatedData )->assignRole('student');
 
-    
+        Log::info("validatedData");
+        Log::info($validatedData);
+      
+
+       
+
+
+        //creamos el usuario 
+         $user = User::create(  $validatedData )->assignRole('student');
+
+          
+         
+          if($user->id){
+            $userId = $user->id;
+
+            foreach ($UserRequest['subjects'] as $subject_id) {
+                 Registration::create([
+                            'career_id' => $validatedData['career_id'],
+                            'subject_id' => $subject_id,
+                            'user_id' => $userId,
+                 ]);
+            }
+
+          }
 
         return redirect()->route('students.index');
     }
@@ -75,7 +102,7 @@ class StudentController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     */
+     */ 
     public function edit(User $student )
     {
     

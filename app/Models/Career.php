@@ -27,7 +27,7 @@ class Career extends Model
       
 
      //una carrera puede tener muchas materias 
-    public function subjectS()
+    public function subjects()
     {
         return $this->hasMany(Subject::class);
     }

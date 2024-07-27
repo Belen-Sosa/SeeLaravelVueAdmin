@@ -21,11 +21,10 @@ class Registration extends Model
         return $this->belongsTo(User::class);
     }
 
-    //una incripcion puede tener muchas materias }
-    // Modelo User
+  
     public function subject()
     {
-        return $this->belongsToMany(Subject::class);
+        return $this->belongsTo(Subject::class);
     }
 
 }

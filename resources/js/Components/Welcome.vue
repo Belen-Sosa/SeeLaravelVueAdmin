@@ -1,9 +1,70 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import { addIcons } from "oh-vue-icons";
+import { IoPerson } from "oh-vue-icons/icons";
+addIcons(IoPerson);
 </script>
 
 <template>
-  <div>
-    <h1>{{$page.props}}</h1>
+  <div class="centered-container">
+    <div class="content">
+      <h1 class="text-white welcome shadow-text">¡Bienvenido!</h1>
+      <h2 class="text-gray-300 shadow-text">Coordinador</h2>
+      <span class="span shadow-text">
+        <v-icon name="io-person" class="icon-color icon-shadow " />
+        {{ $page.props.auth.user.name }}
+      </span>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.centered-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  min-height: 100vh;
+  color: white; /* Text color for better readability */
+ 
+
+}
+
+.content {
+  text-align: center;
+  padding-top: 60px; /* Increased padding for a larger content box */
+  font-size:2rem; /* Increased font size for larger text */
+
+}
+
+.text-white {
+  margin-top: 20px; /* Increased padding for a larger content box */
+  color: white;
+  padding: 30px 0px 30px 0; 
+
+}
+
+.icon-color {
+  color: #fff; /* Icon color */
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.span{
+  margin:30px;
+}
+
+.welcome {
+  font-size: 4rem; /* Adjust this value to make the text larger or smaller */
+  font-weight: bold; /* Optional: Make the text bold */
+}
+.shadow-text {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9); /* Shadow for the coordinator text */
+}
+
+.icon-color {
+  color: rgb(25, 185, 25);
+}
+
+.icon-shadow {
+  filter: drop-shadow(0 4px 6px rgb(0, 0, 0)); /* Ajusta el sombreado del ícono */
+}
+</style>

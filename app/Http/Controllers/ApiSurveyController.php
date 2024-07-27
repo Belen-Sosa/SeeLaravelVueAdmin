@@ -16,7 +16,7 @@ class ApiSurveyController extends Controller
     public function index()
     {
         
-       $surveys= Survey::all();
+        $surveys = Survey::where('estate', 1)->get();
        
        return response()->json($surveys,200);
     }

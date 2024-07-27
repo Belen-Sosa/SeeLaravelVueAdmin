@@ -27,22 +27,22 @@ const deleteTeacher= id =>{
     <AppLayout>
         <!--definir el template para el slot del header -->
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h1 class="font-semibold text-3xl drop-shadow-md  text-white leading-tight">
                 Profesores
             </h1>
         </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="content-data">
                     <div class="flex justify-between" v-if="$page.props.user.permissions.includes('create teacher')">
-                        <Link :href="route('teachers.create')" class="text-white bg-indigo-500 hover:bg-indigo-700 py-2 px-4 rounded">
+                        <Link :href="route('teachers.create')" class="button-add">
                             Registrar Profesor
                         </Link>
                     </div>
 
                     <div class="mt-4">
                         <table
-            class="divide-y divide-gray-100 min-w-full text-left text-sm font-light text-surface dark:text-white">
+            class="divide-y divide-gray-300 min-w-full text-left text-sm font-light text-surface ">
             <thead
               class="border-b border-neutral-200 font-medium dark:border-white/10">
               <tr>
@@ -60,8 +60,8 @@ const deleteTeacher= id =>{
                 <td class="whitespace-nowrap px-6 py-4">  {{teacher.file}}</td>
                 <td class="whitespace-nowrap px-6 py-4">  {{teacher.mail}}</td>
                 <td class="whitespace-nowrap px-6 py-4"> {{teacher.phone}}</td>
-                <td>  <Link class="py-2 px-4" :href="route('teachers.edit',teacher.id)"  v-if="$page.props.user.permissions.includes('update teacher')" >Editar </Link></td>
-               <td> <Link class="py-2 px-4 text-red-600" @click="deleteTeacher(teacher.id)"  v-if="$page.props.user.permissions.includes('delete teacher')"> Borrar</Link></td>
+                <td>  <Link class="button-edit" :href="route('teachers.edit',teacher.id)"  v-if="$page.props.user.permissions.includes('update teacher')" > <v-icon name="bi-pencil-fill" class="drop-shadow-md" /> </Link></td>
+               <td> <Link class="button-delete" @click="deleteTeacher(teacher.id)"  v-if="$page.props.user.permissions.includes('delete teacher')"> <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
             </tr>
              
             </tbody>

@@ -24,14 +24,26 @@ class ApiUserController extends Controller
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
 
-
+          
             $user = User::where('email',$request->email)->first();
-           
+            
+            
+        
+            // Obtener solo los datos pivot de las materias
+            $subjects = $user->subjects->map(function ($subject) {    return [   'subject' => $subject->pivot->toArray(), ]; });
+            Log::info('subjects');
+            Log::info($subjects);
+                        
+                       
+
+
             return response()->json([
                 'status'=> true,
                 'token' => $token,
                 'token_type' => 'Bearer',
-                'user'=>$user
+                'user'=>$user,
+                'subjects_register'=>$subjects
+               
                 
                
             ]);

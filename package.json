@@ -22,7 +22,10 @@
         "@inertiajs/inertia": "^0.11.1",
         "chart.js": "^4.4.3",
         "chartjs-plugin-datalabels": "^2.2.0",
+        "html2canvas": "^1.4.1",
         "inertia": "^0.0.7",
+        "jspdf": "^2.5.1",
+        "oh-vue-icons": "^1.0.0-rc3",
         "vue-chartjs": "^5.3.1"
     }
 }

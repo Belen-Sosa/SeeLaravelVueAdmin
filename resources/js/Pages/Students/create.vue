@@ -14,6 +14,10 @@ defineProps({
     careers:{
         type: Object,
         required:true
+    },
+    subjects:{
+        type: Object,
+        required:true
     }
 })
 
@@ -21,10 +25,11 @@ const form = useForm({
     name:'',
     career_id:'',
     email:'',
-    password:''
+    password:'',
+    subjects:[]
    
 })
-
+ 
 
   </script>
 
@@ -40,7 +45,7 @@ const form = useForm({
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200 ">
                         <!-- haacemos un emit a traves del submit (@ es el atajo para el v-on dentro de vue)para llamar a la ruta de store(ruta de guardado) -->
-                        <StudentForm :form="form" :careers="careers" @submit="form.post(route('students.store'))"></StudentForm>
+                        <StudentForm :form="form" :careers="careers" :subjects="subjects" @submit="form.post(route('students.store'))"></StudentForm>
 
                     </div>
 

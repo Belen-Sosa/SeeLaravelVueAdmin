@@ -75,4 +75,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Career::class);
     }
+
+   
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'registrations', 'user_id', 'subject_id')
+                    ->withPivot('career_id');
+    }
 }

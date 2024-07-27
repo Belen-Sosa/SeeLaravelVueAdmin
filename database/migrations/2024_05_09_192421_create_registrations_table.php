@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('career_id');
-            $table->unsignedBigInteger('subject');
+            $table->unsignedBigInteger('subject_id');
             $table->unsignedBigInteger('user_id');
 
             $table->timestamps();
 
-            $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');;
-            
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
+            $table->foreign('career_id')->references('id')->on('careers');
+            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('user_id')->references('id')->on('users');
 
         });
     }

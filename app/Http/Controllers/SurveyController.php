@@ -20,20 +20,41 @@ class SurveyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         
    
 
-           $surveys = Survey::with('career')
-           ->with('subject')
-           ->paginate(self::NUMBER_OF_ITEMS_PER_PAGE);
-           
-       
 
-       return Inertia('Surveys/index', [
-           'surveys' => $surveys
-       ]);
+        // Obtener la fecha actual
+        $now = Carbon::now();
+     
+        // Obtener las encuestas que tienen estado 1 y la fecha final es mayor que la actual
+        $surveysToUpdate = Survey::where('final_date', '<', $now)
+                                 ->get();
+    
+
+        Log::info("surveysToUpdate");
+        Log::info($surveysToUpdate);
+                                 
+        
+        // Actualizar el estado de las encuestas
+        foreach ($surveysToUpdate as $survey) {
+            $survey->estate = 0;
+            $survey->save();
+        }
+
+        $surveys = Survey::with('career')
+        ->with('subject')
+        ->paginate(self::NUMBER_OF_ITEMS_PER_PAGE);
+           // Obtener el mensaje de la consulta de la URL si existe
+    $message = $request->query('message', '');
+
+        return Inertia('Surveys/index', [
+        'surveys' => $surveys,
+        'message'=> $message
+
+        ]);
     }
 
     /**
@@ -42,7 +63,7 @@ class SurveyController extends Controller
     public function create()
     {
         $careers= Career::all();
-        $subjects= Subject::all();
+        $subjects= Career::with('subjects')->get();
         
         return inertia('Surveys/create',['subjects'=>$subjects,'careers'=>$careers]);
     }
@@ -103,37 +124,32 @@ class SurveyController extends Controller
     
     {  
         $survey = Survey::findOrFail($id);
-         Log::info('Entramos aquii');
-        Log::info($survey);
+
         try {
-        // Validar y actualizar el estado de la encuesta
-        $validatedData = $request->validated();
-       // $survey->estate = $validatedData['estate'];
-       Log::info($validatedData);
-     
-       if( $survey->update(['estate' => $validatedData['estate']])){
-            // Log para verificar si la solicitud está llegando al controlador
-            Log::info('Estado actualizado correctamente');
-       }else{
-        Log::info('no se pudo, segui intentando');
-       }
-           
-
-      
-
-        return redirect()->route('surveys.index');
-    } catch (\Exception $e) {
-        // Manejo de errores si ocurre alguna excepción
-        
-        
-        Log::error('Error al actualizar el estado de la encuesta: ' . $e->getMessage());
-                
-                
-        // Puedes retornar un error o redirigir a una página de error
-                
+            // Validar y actualizar el estado de la encuesta
+            $validatedData = $request->validated();
+            $newState = $validatedData['estate'];
+            $currentDate = Carbon::now();
+    
+            // Verificar si la fecha final es menor que la fecha actual
+            if ($survey->final_date < $currentDate && $newState == 1) {
+                $message = "No se puede actualizar el estado a 'PUBLIBA' porque la fecha final es menor a la fecha actual.";
+            } else {
+                // Actualizar el estado si la validación pasa
+                if ($survey->update(['estate' => $newState])) {
+                    $message = "Estado actualizado correctamente";
+                } else {
+                    $message = "Error al intentar actualizar el estado, pruebe cambiar la Fecha Final";
+                }
+            }
+    
+            return redirect()->route('surveys.index', ['message' => $message]);
+        } catch (\Exception $e) {
+            // Manejo de errores si ocurre alguna excepción
+            Log::error('Error al actualizar el estado de la encuesta: ' . $e->getMessage());
             
-        return back()->withError('Error al actualizar el estado de la encuesta');
-      }
+            return back()->withError('Error al actualizar el estado de la encuesta');
+        }
   
     }
 

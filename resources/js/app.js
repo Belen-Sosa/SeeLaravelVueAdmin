@@ -5,8 +5,11 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-import axios from 'axios';
+import { OhVueIcon, addIcons } from "oh-vue-icons";
 
+
+import { BiPencilFill ,BiTrash3Fill  } from "oh-vue-icons/icons";
+addIcons(BiPencilFill , BiTrash3Fill );
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -19,7 +22,8 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
-            
+      
+            .component('v-icon', OhVueIcon) // Registra el componente globalmente
             .mount(el);
         
 
