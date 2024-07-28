@@ -74,7 +74,10 @@ class SurveyRequest extends FormRequest
         return [
 
             'title.required'=>_('El titulo no puede estar vacio.'),
-           
+            'career.required'=>_('Debe seleccionar una carrera.'),
+            'subject_id.required'=>_('Debe seleccionar una materia.'),
+            'description.required'=>_('Debe agregar una descripcion.'),
+            'final_date.required'=>_('Debe seleccionar una fecha de cierre.'),
         ];
     }
 }

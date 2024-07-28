@@ -34,7 +34,7 @@ class SubjectRequest extends FormRequest
         return [
 
             'name.require'=>_('El nombre de la materia es requerido.'),
-           
+            'year.require'=>_('Debe ingresar a que año de la carrera pertenece la materia.'),
             'career_id.require'=>_('Debe seleccionar una carrera.'),
             'teacher_id.require'=>_('Debe seleccionar un profesor.'),
             

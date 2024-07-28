@@ -57,7 +57,11 @@ class UserRequest extends FormRequest
         return [
 
             'name.unique'=>_('EL nombre del usuario ya existe.'),
-            'email.unique'=>_('El correo ingresado ya se encuentra registrado.')
+            'name.require'=>_('Debe ingresar un nombre de Usuario'),
+            'email.unique'=>_('El correo ingresado ya se encuentra registrado.'),
+            'email.require'=>_('Debe ingresar un correo electronico'),
+            'career.require'=>_('Debe seleccionar una carrera.'),
+            'password.require'=>_('Debe ingresar una contraseña.')
             
         ];
     }

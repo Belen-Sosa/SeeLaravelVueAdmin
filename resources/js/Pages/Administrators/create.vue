@@ -31,7 +31,7 @@ const form = useForm({
 <template>
     <AppLayout >
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight" v-if="$page.props.user.permissions.includes('create admin')">
+            <h1 class="title" v-if="$page.props.user.permissions.includes('create admin')">
                 Agregar nuevo Administrador{{ $page.props.user.data }}
             </h1>
         </template>

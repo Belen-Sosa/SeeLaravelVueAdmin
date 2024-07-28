@@ -27,4 +27,13 @@ class LoginRequest extends FormRequest
 
         ];
     }
+
+    public function messages()
+    {
+        return [
+         
+            'email.required'=>_('Debe ingresar su correo electronico.'),
+            'password.required' => _('Debe ingresar su contraseña.')
+        ];
+    }
 }

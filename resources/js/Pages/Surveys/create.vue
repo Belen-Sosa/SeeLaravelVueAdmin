@@ -36,7 +36,7 @@ const form = useForm({
 <template>
     <AppLayout >
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight" v-if="$page.props.user.permissions.includes('create survey')">
+            <h1 class="title" v-if="$page.props.user.permissions.includes('create survey')">
                 Agregar nueva Encuesta
             </h1>
         </template>

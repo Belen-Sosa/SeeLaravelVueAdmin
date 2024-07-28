@@ -31,15 +31,15 @@ defineEmits(['submit'])
 </script>
 <template>
     <FormSection @submitted="$emit('submit')">
-        <template #title>{{  updating? "Editar Carrera": "Crear nueva Carrera"}} </template>
-        <template #description> {{ updating? "Editando la carrera seleccionada":"Creando una nueva carrera" }}</template>
+        <template #title>{{  updating? "Editar Carrera": "Nueva Carrera"}} </template>
+        <template #description> {{ updating? "Edite los datos que desee de la carrera.":"Complete los datos de la carrera que quiere cargar." }}</template>
         <template #form>
              <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="name" value="Nombre"></InputLabel>
-                <TextInput id="name" v-model="form.name" type="text" autocomplete="nombre" class="mt-1 block w-full"></TextInput>
+                <TextInput id="name" v-model="form.name" type="text" autocomplete="nombre" required class="mt-1 block w-full"></TextInput>
 
                 <InputLabel for="duration" value="Duracion"></InputLabel>
-                <TextInput id="duration" v-model="form.duration" type="number" autocomplete="duracion" class="mt-1 block w-full"></TextInput>
+                <TextInput id="duration" v-model="form.duration" type="number" autocomplete="duracion" required class="mt-1 block w-full"></TextInput>
          
                 <InputError :message="$page.props.errors.name" class="mt-2"></InputError>
                 <InputError :message="$page.props.errors.duration"  class="mt-2"></InputError>

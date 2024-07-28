@@ -40,15 +40,15 @@ defineEmits(['submit'])
 <template>
     <FormSection @submitted="$emit('submit')">
         <template #title>{{  updating? "Editar Materia": "Crear nueva Materia"}} </template>
-        <template #description> {{ updating? "Editando la materia seleccionada":"Creando una nueva materia" }}</template>
+        <template #description> {{ updating? "Edite los datos que desee de la materia":"Complete los datos de la materia que desea cargar." }}</template>
         <template #form>
              <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="name" value="Nombre"></InputLabel>
-                <TextInput id="name" v-model="form.name" type="text" autocomplete="nombre" class="mt-1 block w-full"></TextInput>
+                <TextInput id="name" v-model="form.name" type="text" autocomplete="nombre" required class="mt-1 block w-full"></TextInput>
                 <InputError :message="$page.props.errors.name" class="mt-2"></InputError>
 
                 <InputLabel  class="mt-2" for="year" value="Año"></InputLabel>
-                <TextInput id="year" v-model="form.year" type="number"  class="mt-1 block w-full"></TextInput>
+                <TextInput id="year" v-model="form.year" type="number" required class="mt-1 block w-full"></TextInput>
                  <InputError :message="$page.props.errors.year"  class="mt-2"></InputError>
          
 
@@ -56,7 +56,7 @@ defineEmits(['submit'])
 
 
                  <InputLabel class="mt-2" for="career" value="Carrera"></InputLabel>
-                 <select id="career_id" v-model="form.career_id" class="mt-1 block w-full">
+                 <select id="career_id " required v-model="form.career_id" class="mt-1 block w-full">
                     <option  v-for="career in careers" :value="career.id">{{ career.name }}</option>
                  </select>
                  <InputError :message="$page.props.errors.career"  class="mt-2"/>
@@ -65,7 +65,7 @@ defineEmits(['submit'])
 
                  
                  <InputLabel  class="mt-2" for="teacher" value="Profesor"></InputLabel>
-                 <select id="teacher_id" v-model="form.teacher_id" class="mt-1 block w-full">
+                 <select id="teacher_id" required v-model="form.teacher_id" class="mt-1 block w-full">
                     <option  v-for="teacher in teachers" :value="teacher.id">{{ teacher.name }}</option>
                  </select>
                  <InputError :message="$page.props.errors.teacher"  class="mt-2"/>

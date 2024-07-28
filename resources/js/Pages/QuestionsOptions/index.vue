@@ -72,7 +72,7 @@ const handleSubmit = () => {
     <AppLayout>
         <!--definir el template para el slot del header -->
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h1 class="title">
                 Opciones
                 
             </h1>
@@ -82,21 +82,21 @@ const handleSubmit = () => {
  
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
              
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="content-data">
                   
                     <div class="flex justify-between" >
                           
                             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
                       Opciones de la Pregunta :  {{question.title }}
                       </h1>
-                      <FormOption  v-if="$page.props.user.permissions.includes('create option')"  
+                     <div class="button-add"><FormOption  v-if="$page.props.user.permissions.includes('create option')"  
                       :form="form" 
                       @cleanForm="cleanForm($event)";
                       @submit="handleSubmit"
                        
                    
-                      ></FormOption>
-                      <!-- Button trigger modal -->
+                      ></FormOption> </div> 
+                   
                       
                     </div>
 
@@ -120,17 +120,17 @@ const handleSubmit = () => {
                        
                       
                        
-                            <td>  <FormOption  v-if="$page.props.user.permissions.includes('update option')" 
+                            <td> <div class="button-edit">  <FormOption  v-if="$page.props.user.permissions.includes('update option')" 
                                  :updating="true" :form="form" :question_id="question.id" 
                                   @submitEdit="handleEdit(option,$event)" 
                                   @updatingForm="updatingForm(option)"
                                   @cleanForm="cleanForm($event)";
                                   ></FormOption>
-                                  
+                                </div>
                             </td>
                                 
                              
-                            <td> <Link class="py-2 px-4 text-red-600" @click="deleteOption(option.id)"  v-if="$page.props.user.permissions.includes('delete option')"> Borrar</Link></td>
+                            <td> <Link class="button-delete" @click="deleteOption(option.id)"  v-if="$page.props.user.permissions.includes('delete option')"> <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
                            
                     
                        </tr>

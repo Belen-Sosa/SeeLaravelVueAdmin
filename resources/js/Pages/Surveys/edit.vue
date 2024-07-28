@@ -35,10 +35,10 @@ const form = useForm({
 <AppLayout >
    
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">Editar Encuesta</h1>
+            <h1 class="title">Editar Encuesta</h1>
         </template>
         <div class="py-12">
-            <div class="max-ww-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-ww-7xl mx-auto sm:px-6 lg:px-6">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <SurveyForm :updating="true" :careers="careers"  :form="form" @submit="form.put(route('surveys.update',survey.id))"></SurveyForm>

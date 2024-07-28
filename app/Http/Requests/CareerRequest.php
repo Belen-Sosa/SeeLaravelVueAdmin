@@ -40,6 +40,7 @@ class CareerRequest extends FormRequest
     {
         return [
             'name.unique'=>_('El nombre de la carrera ya existe.'),
+            'name.required'=>_('Debe ingresar el nombre de la carrera.'),
             'duration.required' => _('La duración no puede ser nula.')
         ];
     }

@@ -28,4 +28,7 @@ class QuestionRequest extends FormRequest
             'type_question_id'=> ['required','exists:type_questions,id'],
         ];
     }
+
+     
+
 }

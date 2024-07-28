@@ -93,14 +93,15 @@ const handleSubmit = () => {
 
 
 
-    <button @click="openModal">{{  updating? "Editar ": "Agregar Opcion"}} </button>
+    <button @click="openModal"><v-icon v-if="updating" name="bi-pencil-fill" class="drop-shadow-md" />
+        <p  v-if="!updating"> Agregar Opcion</p></button>
 
 <Modal :show="showModal" @close="closeModal" maxWidth="2xl" closeable>
     <!-- Contenido del modal -->
     <div class="p-4">
       <FormSection @submitted="handleSubmit()">
         <template #title>{{  updating? "Editar Opcion": "Crear Nueva Opcion"}} </template>
-        <template #description> {{ updating? "Editando el registro de la Opción seleccionada":"Creando un nuevo registro de Opción" }}</template>
+        <template #description> {{ updating? "":"Complete los datos de la opcion de desee agregar" }}</template>
         <template #form>
              <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="value" value="Valor"></InputLabel>

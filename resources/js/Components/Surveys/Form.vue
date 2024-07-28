@@ -59,32 +59,32 @@ watch(() => props.form.career_id, updateSubjects);
 
 <template>
     <FormSection @submitted="$emit('submit')">
-        <template #title>{{ updating ? "Editar Encuesta" : "Crear Nueva Encuesta" }}</template>
-        <template #description>{{ updating ? "Editando el registro de la Encuesta seleccionada" : "Creando un nuevo registro de Encuesta" }}</template>
+        <template #title>{{ updating ? "Editar Encuesta" : "Agregar Encuesta." }}</template>
+        <template #description>{{ updating ? "Edite los datos que desee de la encuesta seleccionada" : "Complete los datos de la encuesta que quiere cargar." }}</template>
         <template #form>
             <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="title" value="Titulo"></InputLabel>
-                <TextInput id="title" v-model="form.title" type="text" class="mt-1 block w-full"></TextInput>
+                <TextInput id="title" v-model="form.title" type="text" class="mt-1 block w-full" required></TextInput>
                 <InputError :message="$page.props.errors.title" class="mt-2"></InputError>
 
-                <InputLabel v-if="!updating" class="mt-2" for="career_id" value="Carrera"></InputLabel>
-                <select v-if="!updating" id="career_id" v-model="form.career_id" @change="updateSubjects" class="mt-1 block w-full">
+                <InputLabel v-if="!updating" class="mt-2" for="career_id" value="Carrera" ></InputLabel>
+                <select v-if="!updating" id="career_id" v-model="form.career_id" @change="updateSubjects" class="mt-1 block w-full" required >
                     <option v-for="career in careers" :key="career.id" :value="career.id">{{ career.name }}</option>
                 </select>
                 <InputError v-if="!updating" :message="$page.props.errors.career_id" class="mt-2"></InputError>
 
                 <InputLabel v-if="!updating" class="mt-2" for="subject_id" value="Materia"></InputLabel>
-                <select v-if="!updating" id="subject_id" v-model="form.subject_id" class="mt-1 block w-full">
+                <select v-if="!updating" id="subject_id" v-model="form.subject_id" class="mt-1 block w-full" required>
                     <option v-for="subject in filteredSubjects" :key="subject.id" :value="subject.id">{{ subject.name }}</option>
                 </select>
                 <InputError v-if="!updating" :message="$page.props.errors.subject_id" class="mt-2"></InputError>
 
                 <InputLabel for="description" value="Descripcion"></InputLabel>
-                <TextInput id="description" v-model="form.description" type="text" class="mt-1 block w-full"></TextInput>
+                <TextInput id="description" v-model="form.description" type="text" class="mt-1 block w-full" required></TextInput>
                 <InputError :message="$page.props.errors.description" class="mt-2"></InputError>
 
                 <InputLabel for="final_date" value="Fecha de cierre"></InputLabel>
-                <TextInput id="final_date" v-model="form.final_date" type="datetime-local" class="mt-1 block w-full"></TextInput>
+                <TextInput id="final_date" v-model="form.final_date" type="datetime-local" class="mt-1 block w-full" required></TextInput>
                 <InputError :message="$page.props.errors.final_date" class="mt-2"></InputError>
             </div>
         </template>

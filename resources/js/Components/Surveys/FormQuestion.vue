@@ -105,24 +105,26 @@ const handleSubmit = () => {
 
 
 
-    <button @click="openModal">{{  updating? "Editar ": "Agregar Pregunta"}} </button>
+    <button  @click="openModal"><v-icon v-if="updating" name="bi-pencil-fill" class="drop-shadow-md" />
+                                <p  v-if="!updating"> Agregar Pregunta</p>
+    </button>
 
 <Modal :show="showModal" @close="closeModal" maxWidth="2xl" closeable>
     <!-- Contenido del modal -->
     <div class="p-4">
       <FormSection @submitted="handleSubmit()">
         <template #title>{{  updating? "Editar Pregunta": "Crear Nueva Pregunta"}} </template>
-        <template #description> {{ updating? "Editando el registro de la Pregunta seleccionada":"Creando un nuevo registro de Pregunta" }}</template>
+        <template #description> {{ updating? "Edite la pregunta seleccionada":"Complete los datos para agregar la pregunta" }}</template>
         <template #form>
              <div class="col-span-6 sm:col-span-6">
                 <InputLabel for="title" value="Titulo"></InputLabel>
-                <TextInput id="title" v-model="form.title" type="text"  class="mt-1 block w-full"></TextInput>
+                <TextInput id="title" v-model="form.title" type="text"  class="mt-1 block w-full" required></TextInput>
                 <InputError :message="$page.props.errors.title" class="mt-2"></InputError>
 
              
 
                  <InputLabel   v-if="!updating" class="mt-2" for="type_questions" value="Tipo de Pregunta"></InputLabel>
-                 <select   v-if="!updating" id="type" v-model="form.type_question_id" class="mt-1 block w-full">
+                 <select   v-if="!updating" id="type" v-model="form.type_question_id" class="mt-1 block w-full" required>
                     <option   v-if="!updating"  v-for="type in type_questions" :value="type.id">{{ type.name }}</option>
                  </select>
                  <InputError  v-if="!updating"  :message="$page.props.errors.career_id"  class="mt-2"/>

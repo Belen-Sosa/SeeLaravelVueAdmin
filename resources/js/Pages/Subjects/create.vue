@@ -35,7 +35,7 @@ const form = useForm({
 <template>
     <AppLayout >
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight" v-if="$page.props.user.permissions.includes('create subject')">
+            <h1 class="title" v-if="$page.props.user.permissions.includes('create subject')">
                 Agregar nueva materia
             </h1>
         </template>

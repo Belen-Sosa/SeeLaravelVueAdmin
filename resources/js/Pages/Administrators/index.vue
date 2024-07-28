@@ -52,16 +52,16 @@ const deleteAdmin= id =>{
                             <th scope="col" class="px-6 py-4">Carrera</th>
                             <th scope="col" class="px-6 py-4">Correo Electronico</th>
                             <th></th>
-                            <th></th>
+                   
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="border-b border-neutral-200 dark:border-white/10"  v-for="admin in admins.data">
                             <td class="whitespace-nowrap px-6 py-4 font-medium">  {{admin.name}}</td>
                             <td class="whitespace-nowrap px-6 py-4">  {{admin.career.name}}</td>
-                            <td class="whitespace-nowrap px-6 py-4"> {{admin.id}}</td>
+                            <td class="whitespace-nowrap px-6 py-4"> {{admin.email}}</td>
                             <td>  <Link class="button-edit" :href="route('administrators.edit',admin.id)"  v-if="$page.props.user.permissions.includes('update admin')" ><v-icon name="bi-pencil-fill" class="drop-shadow-md" /> </Link></td>
-                        <td> <Link class="button-delete" @click="deleteAdmin(admin.id)"  v-if="$page.props.user.permissions.includes('delete admin')">  <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
+                     
                         </tr>
                         
                         </tbody>

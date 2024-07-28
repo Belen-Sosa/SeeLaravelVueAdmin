@@ -76,7 +76,7 @@ const handleSubmit = () => {
     <AppLayout>
         <!--definir el template para el slot del header -->
         <template #header>
-            <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h1 class="title">
                 Preguntas
                 
             </h1>
@@ -86,13 +86,14 @@ const handleSubmit = () => {
  
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
              
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="content-data">
                   
                     <div class="flex justify-between" >
                           
                             <h1 class="font-semibold text-xl text-gray-800 leading-tight">
-                      Preguntas de la Encuesta :  {{survey_questions.title }}
+                        Preguntas de la Encuesta :  {{survey_questions.title }}
                       </h1>
+                      <div class="button-add">
                       <FormQuestion  v-if="$page.props.user.permissions.includes('create question')"  
                       :form="form" :survey_id="survey_questions.id" :type_questions="type_questions" 
                       @cleanForm="cleanForm($event)";
@@ -101,7 +102,7 @@ const handleSubmit = () => {
                    
                       ></FormQuestion>
                       <!-- Button trigger modal -->
-                      
+                      </div>
                     </div>
 
                     <div class="mt-4">
@@ -123,18 +124,18 @@ const handleSubmit = () => {
                             <td class="whitespace-nowrap px-6 py-4">  {{question.type_question.name}}</td>
                        
                       
-                            <td  class="whitespace-nowrap px-6 py-4"> <Link class="py-2 px-4" :href="route('options.show',question.id)"  v-if="$page.props.user.permissions.includes('create option') && question.type_question_id!=3" >Agregar Opcion </Link></td>
-                            <td>  <FormQuestion  v-if="$page.props.user.permissions.includes('update question')" 
+                            <td  class="whitespace-nowrap px-6 py-4"> <Link class="py-2 px-4 border rounded shadow-inner bg-gray-200 hover:bg-gray-300" :href="route('options.show',question.id)"  v-if="$page.props.user.permissions.includes('create option') && question.type_question_id!=3" >Agregar Opcion </Link></td>
+                            <td> <div class="button-edit"> <FormQuestion  v-if="$page.props.user.permissions.includes('update question')" 
                                  :updating="true" :form="form" :survey_id="survey_questions.id" :type_questions="type_questions"
                                   @submitEdit="handleEdit(question,$event)" 
                                   @updatingForm="updatingForm(question)"
                                   @cleanForm="cleanForm($event)";
-                                  ></FormQuestion>
+                                  ></FormQuestion> </div>
                                   
                             </td>
                                 
                              
-                            <td> <Link class="py-2 px-4 text-red-600" @click="deleteQuestion(question.id)"  v-if="$page.props.user.permissions.includes('delete question')"> Borrar</Link></td>
+                            <td> <Link class="button-delete" @click="deleteQuestion(question.id)"  v-if="$page.props.user.permissions.includes('delete question')"><v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
                            
                     
                        </tr>

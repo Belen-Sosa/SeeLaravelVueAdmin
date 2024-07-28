@@ -36,8 +36,11 @@ class TeacherRequest extends FormRequest
         return [
 
             'name.unique'=>_('El nombre de el profesor ya existe.'),
-            'file.unique'=>_('El numero de legajo ya existe .'),
-            'mail.require'=>_('El numero de legajo ya existe .'),
+            'name.require'=>_('Debe ingresar el nombre del Profesor.'),
+            'file.require'=>_('Debe ingresar el numero de legajo.'),
+            'mail.unique'=>_('El correo ingresado ya existe.'),
+            'mail.require'=>_('Debe ingresar un correo electronico.'),
+            'phone.require'=>_('Debe ingresar un numero de telefono.'),
             
         ];
     }

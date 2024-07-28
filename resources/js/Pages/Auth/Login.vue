@@ -80,9 +80,7 @@ const submit = () => {
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-400 hover:text-green-700 rounded-md  ">
-                        Forgot your password?
-                    </Link>
+                 
 
                     <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         Log in
