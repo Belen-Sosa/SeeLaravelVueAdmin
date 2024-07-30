@@ -15,6 +15,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TypeQuestionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserTypeController;
+use App\Models\Registration;
 use Illuminate\Support\Facades\Route;
 
 // No auth Routes
@@ -37,6 +38,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'),  'verified'
     Route::resource('/teachers',TeacherController::class);
     Route::resource('/types_question',TypeQuestionController::class);
     Route::resource('/students',StudentController::class);
+    
+    Route::get('/students/{id}/editSubjects', [StudentController::class, 'editSubjects'])->name('students.editSubjects');
+    Route::post('/students/{id}/{career_id}/{subject_id}/addSubjects', [RegistrationController::class, 'create_register'])->name('students.addSubjects');
+
+    Route::delete('/students/{id}/destroyRegister', [StudentController::class, 'destroyRegister'])->name('students.destroyRegister');
     Route::resource('/administrators',AdministratorController::class);
     Route::resource('/users',UserController::class);
 

@@ -53,6 +53,7 @@ const deleteStudent= id =>{
                             <th scope="col" class="px-6 py-4">Correo Electronico</th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -60,6 +61,7 @@ const deleteStudent= id =>{
                             <td class="whitespace-nowrap px-6 py-4 font-medium">  {{student.name}}</td>
                             <td class="whitespace-nowrap px-6 py-4">  {{student.career.name}}</td>
                             <td class="whitespace-nowrap px-6 py-4"> {{student.email}}</td>
+                            <td>  <Link  class="py-2 px-4 border rounded shadow-inner bg-gray-200 hover:bg-gray-300" :href="route('students.editSubjects',student.id)"  v-if="$page.props.user.permissions.includes('update student')" >Inscibir en Materias </Link></td>
                             <td>  <Link class="button-edit" :href="route('students.edit',student.id)"  v-if="$page.props.user.permissions.includes('update student')" ><v-icon name="bi-pencil-fill" class="drop-shadow-md" /> </Link></td>
                         <td> <Link class="button-delete" @click="deleteStudent(student.id)"  v-if="$page.props.user.permissions.includes('delete student')">  <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
                         </tr>

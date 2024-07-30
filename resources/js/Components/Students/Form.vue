@@ -9,18 +9,25 @@
                 <InputError :message="$page.props.errors.name" class="mt-2"></InputError>
 
                 <InputLabel class="mt-2" for="career_id" value="Carrera"></InputLabel>
-                <select id="career_id" v-model="form.career_id" required @change="updateSubjects" class="mt-1 block w-full">
+                <select id="career_id" v-model="form.career_id" required @change="updateSubjects"  class="mt-1 block w-full">
                     <option v-for="career in careers" :value="career.id" :key="career.id">{{ career.name }}</option>
                 </select>
                 <InputError :message="$page.props.errors.career_id" class="mt-2"/>
 
-                <InputLabel class="mt-2" for="subjects" value="Materias" ></InputLabel>
-                <div id="subjects" class="mt-1 block w-full">
-                    <div v-for="subject in filteredSubjects" :key="subject.id">
-                        <input type="checkbox" :value="subject.id" v-model="form.subjects " required>
-                        <label>{{ subject.name }}</label>
-                    </div>
+               
+              <div id="subjects" v-if="!updating" class="mt-1 block w-full">
+                    <InputLabel class="mt-2" for="subjects" value="Materias" ></InputLabel>
+                <div v-for="subject in filteredSubjects" :key="subject.id">
+                    <input
+                        type="checkbox"
+                        :value="subject.id"
+                        v-model="form.subjects"
+                         @change="addSubject(subject.id)"
+                    >
+                    <label>{{ subject.name }}</label>
                 </div>
+               </div>
+
                 <InputError :message="$page.props.errors.subjects" class="mt-2"/>
                 
                 <InputLabel for="email" value="Correo" ></InputLabel>
@@ -37,20 +44,19 @@
         </template>
     </FormSection>
 </template>
-
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import FormError from '@/Components/FormError.vue';
 
 const props = defineProps({
     form: {
         type: Object,
-        required: true
+        required: true,
+    
     },
     updating: {
         type: Boolean,
@@ -64,27 +70,63 @@ const props = defineProps({
     subjects: {
         type: Array,
         required: true
+    },
+    registrations: {
+        type: Array,
+        required: true
     }
 });
 
-const emit = defineEmits(['submit']);
-const filteredSubjects = computed(() => {
-    if (!props.form.career_id) return []; // Return empty array if no career_id selected
+console.log(props.registrations)
 
-    // Find the career object with the selected career_id
+const emit = defineEmits(['submit']);
+
+const filteredSubjects = computed(() => {
+    //si no hay una carrera seleccionada devuelve array vacio
+    if (!props.form.career_id) return [];
+    //si hay una carrera seleccionada devuelve la lista de las materias de esa carrera 
     const career = props.subjects.find(career => career.id === props.form.career_id);
 
-    if (!career || !career.subjects) return []; // Return empty array if career or subjects not found
-
-    console.log('Filtered subjects:', career.subjects); // Log filtered subjects for debugging
+    if (!career || !career.subjects) return [];
     return career.subjects;
 });
 
-
 function updateSubjects() {
-    console.log('Selected career_id:', props.form.career_id); // Agregar este log para depuración
-    props.form.subjects = [];
+    //si el formulario esta en modo edicion hace lo siguiente 
+    if (props.updating) {
+
+        //guarda las materias en las que el usuario ya se encuentra inscripto
+        const registeredSubjects = props.registrations
+            .filter(reg => reg.career_id === props.form.career_id)
+            .map(reg => reg.subject_id);
+        //guarda las materias que estan seleccionadas ahora  y si no hay anda devuelve un array vacio 
+        const currentSubjects = props.form.subjects || [];
+
+        //convina los 2 array sin duplicados
+        const updatedSubjects = Array.from(new Set([...currentSubjects, ...registeredSubjects]));
+        
+        //lo guarda en form subjects 
+        props.form.subjects = updatedSubjects;
+
+
+        console.log("Materias actualizadas:",         props.form.subjects);
+    } else {
+        props.form.subjects = [];
+    }
 }
+
+function addSubject(subjectId) {
+    if (!props.form.subjects.includes(subjectId)) {
+        props.form.subjects.push(subjectId);
+        updateSubjects();
+    }
+}
+
+onMounted(() => {
+    if (props.updating) {
+        updateSubjects();
+    }
+});
 
 watch(() => props.form.career_id, updateSubjects);
 </script>

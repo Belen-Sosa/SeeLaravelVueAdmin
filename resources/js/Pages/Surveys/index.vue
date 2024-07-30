@@ -59,13 +59,10 @@ const updateState = (id, newState) => {
                         </Link>
                     </div>
                     <div v-if="props.message" class="mt-4 p-4 bg-green-100 text-green-800 rounded">
-                      
-                
-                      {{ props.message }}
-                  </div>
-            
-                    <div class="mt-4">
-                        <table class="divide-y divide-gray-300 min-w-full text-left text-sm font-light text-surface dark:text-white">
+                        {{ props.message }}
+                    </div>
+                    <div class="mt-4 overflow-auto">
+                        <table class="divide-y divide-gray-300 min-w-full text-left text-sm font-light text-surface">
                             <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
                                 <tr>
                                     <th scope="col" class="px-6 py-4">Titulo</th>
@@ -80,16 +77,20 @@ const updateState = (id, newState) => {
                             </thead>
                             <tbody>
                                 <tr class="border-b border-neutral-200 dark:border-white/10" v-for="survey in surveys.data" :key="survey.id">
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{ survey.title }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4">{{ survey.description }}</td>
+                                    <td class="whitespace-normal break-words px-6 py-4 font-medium">{{ survey.title }}</td>
+                                    <td class="whitespace-normal break-words px-6 py-4">{{ survey.description }}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ survey.estate ? 'publica' : 'oculta' }}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ survey.start_date }}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ survey.final_date }}</td>
                                     <td>
-                                        <Link class="button-edit" :href="route('surveys.edit', survey.id)" v-if="$page.props.user.permissions.includes('update survey')"> <v-icon name="bi-pencil-fill" class="drop-shadow-md" /></Link>
+                                        <Link class="button-edit" :href="route('surveys.edit', survey.id)" v-if="$page.props.user.permissions.includes('update survey')">
+                                            <v-icon name="bi-pencil-fill" class="drop-shadow-md" />
+                                        </Link>
                                     </td>
                                     <td>
-                                        <Link class="button-delete" @click="deleteSurvey(survey.id)" v-if="$page.props.user.permissions.includes('delete survey')"> <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link>
+                                        <Link class="button-delete" @click="deleteSurvey(survey.id)" v-if="$page.props.user.permissions.includes('delete survey')">
+                                            <v-icon name="bi-trash3-fill" class="drop-shadow-md" />
+                                        </Link>
                                     </td>
                                     <td>
                                         <div class="relative inline-block text-left">
@@ -115,7 +116,6 @@ const updateState = (id, newState) => {
                                 </tr>
                             </tbody>
                         </table>
-                       
                     </div>
                   
                     <div class="flex justify-between mt-2">

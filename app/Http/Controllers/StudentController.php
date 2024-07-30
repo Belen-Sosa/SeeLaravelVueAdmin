@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\Career;
 use App\Models\Registration;
+use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -108,19 +109,68 @@ class StudentController extends Controller
     
         $careers= Career::all();
        
+        $subjects= Career::with('subjects')->get();
+                // Obtener las inscripciones del estudiante con las asignaturas relacionadas
+            $registrations = Registration::
+            where('user_id', $student->id)
+            ->get(); // Asegúrate de llamar a get() para ejecutar la consulta y obtener los datos
 
-        return inertia('Students/edit',['student'=> $student,'careers'=>$careers]);
+
+
+        
+        return inertia('Students/edit',['student'=> $student,'careers'=>$careers, 'subjects'=>$subjects, 'registrations'=> $registrations]);
     }
+/**
+     * Show the form for editing the specified resource.
+     *  public function editSubjects(User $student )
+     */ 
+    public function editSubjects($id)
+{
+    // Obtén la información del estudiante con su carrera relacionada
+    $student = User::with('career')->findOrFail($id);
+    Log::info('student');
+    Log::info($student);
 
+    // Obtén todas las materias de la carrera del estudiante
+    $career = Career::with('subjects')->findOrFail($student->career_id);
+
+    // Obtén las inscripciones del estudiante con las materias relacionadas
+    $registrations = Registration::with('subject')
+        ->where('user_id', $student->id)
+        ->get();
+
+    Log::info('$registrations');
+    Log::info($registrations);
+
+    // Obtener los IDs de las materias en las que el estudiante está inscrito
+    $registeredSubjectIds = $registrations->pluck('subject.id')->toArray();
+
+    // Filtrar las materias de la carrera excluyendo las que ya están registradas
+    $availableSubjects = $career->subjects->reject(function($subject) use ($registeredSubjectIds) {
+        return in_array($subject->id, $registeredSubjectIds);
+    });
+
+    Log::info('$availableSubjects');
+    Log::info($availableSubjects);
+
+    return inertia('Students/editSubjects', [
+        'student' => $student,
+        'career_subjects' => $availableSubjects, // Cambiado para enviar las materias filtradas
+        'registrations' => $registrations,
+    ]);
+}
     /**
      * Update the specified resource in storage.
      */
     public function update(UserRequest $request, User $student)
     {
         $student->update($request->validated());
+        $userId = $student->id;
+       
         return redirect()->route('students.index');
     }
 
+ 
     /**
      * Remove the specified resource from storage.
      */
@@ -128,5 +178,15 @@ class StudentController extends Controller
     {
         $student->delete();
         return redirect()->route('students.index');
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     */
+    public function destroyRegister( $id)
+    { 
+        $register = Registration::findOrFail($id);
+        $register->delete();
+       
     }
 }

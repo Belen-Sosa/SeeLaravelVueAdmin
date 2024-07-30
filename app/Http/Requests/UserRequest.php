@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -22,47 +21,53 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {   
-       // Obtiene el ID del usuario desde la ruta
+        // Obtiene el ID del usuario desde la ruta
+        $userId = null;
+        if ($this->route('student')) {
+            $userId = $this->route('student')->id;
+        } elseif ($this->route('administrator')) {
+            $userId = $this->route('administrator')->id;
+        }
 
-       if($this->route('student')){
-        $userId=$this->route('student')->id;
-       } if($this->route('administrator')){
-            $userId=$this->route('administrator');}
-        else{
-        $userId=null;
-       }
-     
-
-       
-    
         return [
-            'name'=> ['required','string','max:100',  Rule::unique('users', 'name')->ignore($userId)],
-            'career_id'=> ['required','exists:careers,id'],
-            'email'=> ['required','email','string','max:1000' , Rule::unique('users', 'email')->ignore($userId)],
-
-            //si el metodo es un post, osea una creacion de usuario hacemos que el password sea requerido si es un edit no.
-          'password' => [
+            'name' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('users', 'name')->ignore($userId),
+            ],
+            'career_id' => [
+                'required',
+                'exists:careers,id',
+            ],
+            'email' => [
+                'required',
+                'email',
+                'string',
+                'max:1000',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
+            'password' => [
                 $this->isMethod('post') ? 'required' : 'nullable',
                 'string',
-                'min:8'
-            ]
+                'min:8',
+            ],
         ];
-       
-      
-       
     }
 
-    public function messages()
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
     {
         return [
-
-            'name.unique'=>_('EL nombre del usuario ya existe.'),
-            'name.require'=>_('Debe ingresar un nombre de Usuario'),
-            'email.unique'=>_('El correo ingresado ya se encuentra registrado.'),
-            'email.require'=>_('Debe ingresar un correo electronico'),
-            'career.require'=>_('Debe seleccionar una carrera.'),
-            'password.require'=>_('Debe ingresar una contraseña.')
-            
+            'name.required' => 'Debe ingresar un nombre de usuario.',
+            'email.unique' => 'El correo ingresado ya se encuentra registrado.',
+            'email.required' => 'Debe ingresar un correo electrónico.',
+            'career_id.required' => 'Debe seleccionar una carrera.',
+            'password.required' => 'Debe ingresar una contraseña.',
         ];
     }
 }
