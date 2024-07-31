@@ -3,8 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
+
 
 class ResultRequest extends FormRequest
 {
@@ -13,7 +12,7 @@ class ResultRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        Log::info('Entramos en ResultRequest');
+     
         return true;
     }
 
@@ -25,7 +24,6 @@ class ResultRequest extends FormRequest
     public function rules(): array
     {
         $rules = [];
-        Log::info("en rules");  
       
         foreach ($this->all() as $index => $item) {
             if (is_array($item)) {
@@ -41,7 +39,7 @@ class ResultRequest extends FormRequest
             }
         }
 
-        Log::info($rules);
+
         return $rules;
     }
 
@@ -49,8 +47,6 @@ class ResultRequest extends FormRequest
     {
         $processedData = [];
 
-        Log::info("en prepareForValidation");  
-        Log::info($this->all());
         foreach ($this->all() as $questionId => $answer) {
             if (is_array($answer)) {
                 foreach ($answer as $optionId) {
@@ -89,7 +85,6 @@ class ResultRequest extends FormRequest
         }
 
         $this->replace($resultArray);
-        Log::info("data procesada");
-        Log::info($this->all());
+     
     }
 }

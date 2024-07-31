@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Career;
-use Illuminate\Http\Request;
-use Inertia\Response;
 use App\Http\Requests\CareerRequest;
 
 class CareerController extends Controller

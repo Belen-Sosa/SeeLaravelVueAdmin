@@ -5,7 +5,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
+
 
 class ApiUserController extends Controller
 {
@@ -23,19 +23,13 @@ class ApiUserController extends Controller
               /** @var \App\Models\MyUserModel $user **/
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
-
-          
+       
             $user = User::where('email',$request->email)->first();
-            
-            
+                      
         
             // Obtener solo los datos pivot de las materias
             $subjects = $user->subjects->map(function ($subject) {    return [   'subject' => $subject->pivot->toArray(), ]; });
-            Log::info('subjects');
-            Log::info($subjects);
-                        
-                       
-
+                            
 
             return response()->json([
                 'status'=> true,
@@ -59,7 +53,7 @@ class ApiUserController extends Controller
     }
 
     public function user(Request $request)
-    { Log::info('Entramos en user');
+    { 
         
         return response()->json($request->user());
     }
