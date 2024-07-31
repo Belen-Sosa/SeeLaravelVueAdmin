@@ -18,7 +18,7 @@ jobs:
       with:
         php-version: '8.2.6'
  
-    # Desde aquí hasta la siguiente almohadilla se puede comentar
+    
     - name: Install dependencies
       run: composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
 
@@ -32,7 +32,7 @@ jobs:
         php artisan migrate --force
         php artisan db:seed --force
         php artisan config:cache
-    #
+    
     - name: Deploy to shared hosting
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
