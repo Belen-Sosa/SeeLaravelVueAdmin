@@ -16,7 +16,7 @@ jobs:
     - name: Configurar entorno PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.1'
+        php-version: '8.2.6'
  
     # Desde aquí hasta la siguiente almohadilla se puede comentar
     - name: Install dependencies
