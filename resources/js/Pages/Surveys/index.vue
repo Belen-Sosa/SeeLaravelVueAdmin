@@ -8,7 +8,9 @@ export default {
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import { Inertia } from '@inertiajs/inertia';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+import Modal from "@/Components/ModalAlert.vue";
+
 
 const props = defineProps({
     surveys: {
@@ -30,16 +32,43 @@ const toggleDropdown = (surveyId) => {
     state.activeDropdown = state.activeDropdown === surveyId ? null : surveyId;
 };
 
-const deleteSurvey = id => {
-    if (confirm('¿Desea eliminar esta encuesta?')) {
-        Inertia.delete(route('surveys.destroy', id));
-    }
-};
+
 
 const updateState = (id, newState) => {
     if (confirm('¿Desea modificar el estado de esta encuesta?')) {
         Inertia.put(route('surveys.updateState', id), { estate: newState });
     }
+};
+
+
+
+
+const showConfirm = ref(false);
+const confirmMessage = ref('');
+let survey_id = null;
+let newState= null;
+
+const confirmDelete = (id) => {
+confirmMessage.value = '¿Desea eliminar esta encuesta?';
+survey_id = id;
+showConfirm.value = true;
+};
+
+
+const confirmUpdateState = (id,state) => {
+confirmMessage.value = '¿Desea cambiar de estado?';
+survey_id = id;
+newState = state
+showConfirm.value = true;
+};
+
+const confirmAction = () => {
+Inertia.delete(route('surveys.destroy', survey_id));
+showConfirm.value = false;
+};
+const confirmActionState = () => {
+    Inertia.put(route('surveys.updateState', survey_id), { estate: newState });
+showConfirm.value = false;
 };
 </script>
 
@@ -88,9 +117,9 @@ const updateState = (id, newState) => {
                                         </Link>
                                     </td>
                                     <td>
-                                        <Link class="button-delete" @click="deleteSurvey(survey.id)" v-if="$page.props.user.permissions.includes('delete survey')">
+                                        <button class="button-delete" @click="confirmDelete(survey.id)" v-if="$page.props.user.permissions.includes('delete survey')">
                                             <v-icon name="bi-trash3-fill" class="drop-shadow-md" />
-                                        </Link>
+                                        </button>
                                     </td>
                                     <td>
                                         <div class="relative inline-block text-left">
@@ -102,11 +131,10 @@ const updateState = (id, newState) => {
                                             </button>
                                             <div v-if="state.activeDropdown === survey.id" class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                 <div class="py-1">
-                                                    <a :href="route('surveys.edit', survey.id)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Modificar</a>
+                                         
                                                     <a :href="route('questions.show', survey.id)" v-if="$page.props.user.permissions.includes('create question')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Agregar Preguntas</a>
-                                                    <a href="#" @click="deleteSurvey(survey.id)" v-if="$page.props.user.permissions.includes('delete survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Borrar</a>
-                                                    <a href="#" @click="() => updateState(survey.id, 1)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Publicar</a>
-                                                    <a href="#" @click="() => updateState(survey.id, 0)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Finalizar</a>
+                                                    <a href="#" @click=" confirmUpdateState(survey.id, 1)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Publicar</a>
+                                                    <a href="#" @click="confirmUpdateState(survey.id, 0)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Finalizar</a>
                                                     <a :href="route('surveys.show', survey.id)" v-if="$page.props.user.permissions.includes('create survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Vista Previa</a>
                                                     <a :href="route('result.show', survey.id)" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Resultados</a>
                                                 </div>
@@ -126,6 +154,9 @@ const updateState = (id, newState) => {
                     </div>
                 </div>
             </div>
+            <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmAction" @close="showConfirm = false" />
+            <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmActionState" @close="showConfirm = false" />
+            
         </div>
     </AppLayout>
 </template>

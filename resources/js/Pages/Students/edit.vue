@@ -11,6 +11,7 @@ import {useForm} from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import StudentForm from '@/Components/Students/Form.vue'
 
+
 const props= defineProps({
     student:{
         type: Object,

@@ -74,6 +74,6 @@ class CareerController extends Controller
     public function destroy(Career $career)
     {
         $career->delete();
-        return redirect()->route('careers.index');
+        return inertia('Careers/index');
     }
 }

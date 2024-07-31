@@ -10,7 +10,24 @@ import { Link } from "@inertiajs/vue3";
 import {Inertia} from '@inertiajs/inertia'
 import { useForm } from '@inertiajs/vue3';
 import FormQuestion from "@/Components/Surveys/FormQuestion.vue";
-import Modal from "@/Components/Modal.vue"
+import Modal from "@/Components/ModalAlert.vue";
+import { ref } from "vue";
+
+
+const showConfirm = ref(false);
+  const confirmMessage = ref('');
+  let question_id = null;
+  
+  const confirmDelete = (id) => {
+    confirmMessage.value = '¿Desea eliminar esta Pregunta?';
+    question_id= id;
+    showConfirm.value = true;
+  };
+  
+  const confirmAction = () => {
+    Inertia.delete(route('questions.destroy', question_id));
+    showConfirm.value = false;
+  };
 
 
 
@@ -48,12 +65,7 @@ const cleanForm = question => {
 };
 
 
-//utilizamos el confirm de js para asegurarnos de la accion y si es asi inertia hace una solicitud de delete
-const deleteQuestion= id =>{
-    if(confirm('¿Desea eliminar esta pregunta?')){
-        Inertia.delete(route('questions.destroy',id))
-    }
-}
+
 const handleEdit = (question) => {
     form.put(route('questions.update', question.id), {
         onSuccess: () => cleanForm()
@@ -135,7 +147,7 @@ const handleSubmit = () => {
                             </td>
                                 
                              
-                            <td> <Link class="button-delete" @click="deleteQuestion(question.id)"  v-if="$page.props.user.permissions.includes('delete question')"><v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
+                            <td> <button class="button-delete"  @click="confirmDelete(question.id)"  v-if="$page.props.user.permissions.includes('delete question')"><v-icon name="bi-trash3-fill" class="drop-shadow-md" /></button></td>
                            
                     
                        </tr>
@@ -152,6 +164,7 @@ const handleSubmit = () => {
 
                 </div>
             </div>
+            <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmAction" @close="showConfirm = false" />
         </div>
     
 

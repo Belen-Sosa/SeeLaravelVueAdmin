@@ -7,6 +7,9 @@ export default {
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import {Inertia} from '@inertiajs/inertia'
+import { ref } from 'vue';
+import Modal from '@/Components/ModalAlert.vue';
+
 
 defineProps({
 
@@ -17,12 +20,21 @@ defineProps({
     } 
    
 })
-//utilizamos el confirm de js para asegurarnos de la accion y si es asi inertia hace una solicitud de delete
-const deleteStudent= id =>{
-    if(confirm('¿Desea eliminar este estudiante?')){
-        Inertia.delete(route('students.destroy',id))
-    }
-}
+
+const showConfirm = ref(false);
+  const confirmMessage = ref('');
+  let student_id = null;
+  
+  const confirmDelete = (id) => {
+    confirmMessage.value = '¿Desea eliminar esta carrera?';
+    student_id = id;
+    showConfirm.value = true;
+  };
+  
+  const confirmAction = () => {
+    Inertia.delete(route('students.destroy', student_id));
+    showConfirm.value = false;
+  };
 </script>
 <template>
     <AppLayout>
@@ -63,7 +75,7 @@ const deleteStudent= id =>{
                             <td class="whitespace-nowrap px-6 py-4"> {{student.email}}</td>
                             <td>  <Link  class="py-2 px-4 border rounded shadow-inner bg-gray-200 hover:bg-gray-300" :href="route('students.editSubjects',student.id)"  v-if="$page.props.user.permissions.includes('update student')" >Inscibir en Materias </Link></td>
                             <td>  <Link class="button-edit" :href="route('students.edit',student.id)"  v-if="$page.props.user.permissions.includes('update student')" ><v-icon name="bi-pencil-fill" class="drop-shadow-md" /> </Link></td>
-                        <td> <Link class="button-delete" @click="deleteStudent(student.id)"  v-if="$page.props.user.permissions.includes('delete student')">  <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
+                        <td> <button class="button-delete" @click="confirmDelete(student.id)"  v-if="$page.props.user.permissions.includes('delete student')">  <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></button></td>
                         </tr>
                         
                         </tbody>
@@ -84,6 +96,7 @@ const deleteStudent= id =>{
 
                 </div>
             </div>
+            <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmAction" @close="showConfirm = false" />
         </div>
     </AppLayout>
 </template>

@@ -7,6 +7,8 @@ export default {
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import {Inertia} from '@inertiajs/inertia'
+import Modal from "@/Components/ModalAlert.vue";
+import { ref } from "vue";
 
 defineProps({
 
@@ -16,12 +18,21 @@ defineProps({
         required: true
     } 
 })
-//utilizamos el confirm de js para asegurarnos de la accion y si es asi inertia hace una solicitud de delete
-const deleteTeacher= id =>{
-    if(confirm('¿Desea eliminar el registro de este profesor?')){
-        Inertia.delete(route('teachers.destroy',id))
-    }
-}
+
+const showConfirm = ref(false);
+  const confirmMessage = ref('');
+  let teacher_id = null;
+  
+  const confirmDelete = (id) => {
+    confirmMessage.value = '¿Desea eliminar este registro de Profesor?';
+    teacher_id  = id;
+    showConfirm.value = true;
+  };
+  
+  const confirmAction = () => {
+    Inertia.delete(route('teachers.destroy', teacher_id ));
+    showConfirm.value = false;
+  };
 </script>
 <template>
     <AppLayout>
@@ -61,7 +72,7 @@ const deleteTeacher= id =>{
                 <td class="whitespace-nowrap px-6 py-4">  {{teacher.mail}}</td>
                 <td class="whitespace-nowrap px-6 py-4"> {{teacher.phone}}</td>
                 <td>  <Link class="button-edit" :href="route('teachers.edit',teacher.id)"  v-if="$page.props.user.permissions.includes('update teacher')" > <v-icon name="bi-pencil-fill" class="drop-shadow-md" /> </Link></td>
-               <td> <Link class="button-delete" @click="deleteTeacher(teacher.id)"  v-if="$page.props.user.permissions.includes('delete teacher')"> <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
+               <td> <button class="button-delete" @click="confirmDelete(teacher.id)"  v-if="$page.props.user.permissions.includes('delete teacher')"> <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></button></td>
             </tr>
              
             </tbody>
@@ -82,5 +93,6 @@ const deleteTeacher= id =>{
                 </div>
             </div>
         </div>
+        <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmAction" @close="showConfirm = false" />
     </AppLayout>
 </template>

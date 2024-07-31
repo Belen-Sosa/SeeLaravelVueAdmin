@@ -10,6 +10,8 @@ import { Link } from "@inertiajs/vue3";
 import {Inertia} from '@inertiajs/inertia'
 import { useForm } from '@inertiajs/vue3';
 import FormOption from "@/Components/OptionsQuestions/FormOption.vue";
+import Modal from "@/Components/ModalAlert.vue";
+import { ref } from "vue";
 
 
 
@@ -44,12 +46,22 @@ const cleanForm = option => {
 };
 
 
-//utilizamos el confirm de js para asegurarnos de la accion y si es asi inertia hace una solicitud de delete
-const deleteOption= id =>{
-    if(confirm('¿Desea eliminar esta opcion?')){
-        Inertia.delete(route('options.destroy',id))
-    }
-}
+
+const showConfirm = ref(false);
+  const confirmMessage = ref('');
+  let option_id = null;
+  
+  const confirmDelete = (id) => {
+    confirmMessage.value = '¿Desea eliminar esta Pregunta?';
+    option_id= id;
+    showConfirm.value = true;
+  };
+  
+  const confirmAction = () => {
+    Inertia.delete(route('options.destroy', option_id));
+    showConfirm.value = false;
+  };
+
 const handleEdit = (option) => {
     form.put(route('options.update', option.id), {
         onSuccess: () => cleanForm()
@@ -130,7 +142,7 @@ const handleSubmit = () => {
                             </td>
                                 
                              
-                            <td> <Link class="button-delete" @click="deleteOption(option.id)"  v-if="$page.props.user.permissions.includes('delete option')"> <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></Link></td>
+                            <td> <button class="button-delete"  @click="confirmDelete(option.id)"   v-if="$page.props.user.permissions.includes('delete option')"> <v-icon name="bi-trash3-fill" class="drop-shadow-md" /></button></td>
                            
                     
                        </tr>
@@ -147,6 +159,7 @@ const handleSubmit = () => {
 
                 </div>
             </div>
+            <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmAction" @close="showConfirm = false" />
         </div>
     
 

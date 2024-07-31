@@ -4,6 +4,9 @@ import { Link } from "@inertiajs/vue3";
 import { Inertia } from '@inertiajs/inertia'
 import { addIcons } from "oh-vue-icons";
 import { BiPlusSquareFill } from "oh-vue-icons/icons";
+import Modal from "@/Components/ModalAlert.vue";
+import { ref } from "vue";
+
 addIcons(BiPlusSquareFill);
 
 const props = defineProps({
@@ -21,11 +24,22 @@ const props = defineProps({
     }
 });
 
-const deleteRegister = id => {
-    if (confirm('¿Desea eliminar esta inscripción?')) {
-        Inertia.delete(route('students.destroyRegister', id));
-    }
-}
+
+const showConfirm = ref(false);
+  const confirmMessage = ref('');
+  let register_id = null;
+  
+  const confirmDelete = (id) => {
+    confirmMessage.value = '¿Desea eliminar esta carrera?';
+    register_id= id;
+    showConfirm.value = true;
+  };
+  
+  const confirmAction = () => {
+    Inertia.delete(route('students.destroyRegister', register_id));
+    showConfirm.value = false;
+  };
+
 
 const addSubject = (subjectId) => {
     const careerId = props.student.career.id;
@@ -77,9 +91,9 @@ const addSubject = (subjectId) => {
                                 <tr class="border-b border-neutral-200 dark:border-white/10" v-for="reg in props.registrations" :key="reg.id">
                                     <td class="whitespace-nowrap px-6 py-4">{{ reg.subject.name }}</td>
                                     <td>
-                                        <Link class="py-2 px-6 text-red-600 hover:text-red-700" @click="deleteRegister(reg.id)" v-if="$page.props.user.permissions.includes('delete student')">
+                                        <button class="py-2 px-6 text-red-600 hover:text-red-700"  @click="confirmDelete(reg.id)" v-if="$page.props.user.permissions.includes('delete student')">
                                             <v-icon name="bi-trash3-fill" class="drop-shadow-md" />
-                                        </Link>
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr v-if="props.registrations.length === 0">
@@ -123,6 +137,8 @@ const addSubject = (subjectId) => {
                     </div>
                 </div>
             </div>
+
+            <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmAction" @close="showConfirm = false" />
         </div>
     </AppLayout>
 </template>
