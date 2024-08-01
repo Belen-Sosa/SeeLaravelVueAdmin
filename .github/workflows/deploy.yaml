@@ -34,7 +34,7 @@ jobs:
         #DB_USERNAME: ${{ secrets.DB_USERNAME }}
         #DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
-        php artisan config:cache
+        
         php artisan migrate --force
         php artisan db:seed --force
         npm install
