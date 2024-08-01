@@ -34,10 +34,12 @@ jobs:
         #DB_USERNAME: ${{ secrets.DB_USERNAME }}
         #DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
-        
-       
-        npm install
-    
+        php artisan config:cache
+        php artisan config:clear
+        php artisan migrate --force
+        php artisan db:seed --force
+      
+        npm run prod
     
     - name: Deploy to hosting
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
