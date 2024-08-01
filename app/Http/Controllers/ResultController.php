@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Log;
 class ResultController extends Controller
 {
    
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
     
