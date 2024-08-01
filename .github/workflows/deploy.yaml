@@ -35,10 +35,9 @@ jobs:
         #DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
         
-        php artisan migrate --force
-        php artisan db:seed --force
+       
         npm install
-        npm run prod
+    
     
     - name: Deploy to hosting
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
