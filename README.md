@@ -1,6 +1,7 @@
 # SEE-ADMIN
 
 **SISTEMA DE ENCUESTAS Y ESTADISTICAS - Gestion administrativa.**
+
 Aplicacion web para que los alumnos de una institucion realizen encuestas de manera anonima con respecto a la eficiencia de las materias que cursan.
 
 Esta aplicacion esta hecha para gestionar la carga de datos, se realizo una aplicacion a parte para que los estudiantes puedan ingresar y realizar sus encuestas, dicha aplicacion se conecta y recibe los datos a traves de una API.
