@@ -1,66 +1,66 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# SEE-ADMIN
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**SISTEMA DE ENCUESTAS Y ESTADISTICAS - Gestion administrativa.**
 
-## About Laravel
+Aplicacion web para que los alumnos de una institucion realizen encuestas de manera anonima con respecto a la eficiencia de las materias que cursan.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Esta aplicacion esta hecha para gestionar la carga de datos, se realizo una aplicacion a parte para que los estudiantes puedan ingresar y realizar sus encuestas, dicha aplicacion se conecta y recibe los datos a traves de una API.
+Puede ver los detalles de la misma en el siguiente link: [Sistema de encuestas y estadisticas - Alumnos ](https://github.com/Belen-Sosa/SeeLaravelVueStudents)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**El planteo del proyecto e idea no es propio, la solucion planteada con estas tecnologías si.**
 
-## Learning Laravel
+Algunas tecnologías y paquetes utilizados:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Laravel | Laravel Jetstream | Inertia | Spatie | Vue3 | Vue-Icons | Tailwind CSS | CSS | JsPDF | html2canvas | Patron MVC |...**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Cuenta con las siguientes secciones:
 
-## Laravel Sponsors
+(imagenes generales, cada modulo posee sus pantallas de cargas, detalles, etc.)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## LOGIN:
 
-### Premium Partners
+![inicio login ](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/inicio.JPG)
+![login ](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/login.JPG)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## INICIO:
 
-## Contributing
+![home ](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/inicio-registrado.JPG)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## CARRERAS:
 
-## Code of Conduct
+![idex carreras](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/carreras-index.JPG)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## PROFESORES:
 
-## Security Vulnerabilities
+![index profesores](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/profesores-index.JPG)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## MATERIAS:
 
-## License
+![index materias](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/materias-index.JPG)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## ALUMNOS :
+
+![index alumnos](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/alumnos-index.JPG)
+
+## ADMINISTRADORES:
+
+![index administradores](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/admins-index.JPG)
+
+## ENCUESTAS:
+![index encuestas](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/encuestas-index.JPG)
+
+## Resultado de encuesta
+
+![reultado encuesta parte 1](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/resultado-ecuesta-1.JPG)
+![reultado encuesta parte 2](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/resultado-ecuesta-2.JPG)
+
+## PERFIL DE USUARIO:
+
+![index perfil usuario](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/index-perfil-usuario.JPG)
+
+
+
+
+**© 2024 Copyright: MejorizarServicios**
