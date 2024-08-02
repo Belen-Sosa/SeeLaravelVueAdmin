@@ -7,7 +7,7 @@ use App\Models\Career;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Log;
 
 class SurveyController extends Controller
 {
@@ -137,9 +137,17 @@ class SurveyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Survey $survey)
-    {
-        $survey->delete();
-        return redirect()->route('surveys.index');
-    }
+  /**
+ * Remove the specified resource from storage.
+ */
+public function destroy($id)
+{
+    Log::info("Estamos en destroy");
+    $survey = Survey::findOrFail($id);
+    $survey->delete();
+    Log::info("Survey deleted: " . $survey);
+
+    return redirect()->route('surveys.index');
+}
+
 }

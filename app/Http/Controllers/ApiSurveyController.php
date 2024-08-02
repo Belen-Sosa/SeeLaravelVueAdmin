@@ -13,7 +13,7 @@ class ApiSurveyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() 
     {
         
         $surveys = Survey::where('estate', 1)->get();
@@ -60,11 +60,5 @@ class ApiSurveyController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+   
 }

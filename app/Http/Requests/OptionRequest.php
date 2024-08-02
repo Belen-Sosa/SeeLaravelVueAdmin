@@ -25,7 +25,7 @@ class OptionRequest extends FormRequest
     {
         return [
             'question_id'=> ['required','exists:questions,id'],
-            'value'=> ['required','string','max:100',Rule::unique(table:'options',column:'value')->ignore(id:request('option'),idColumn:'id')],
+            'value'=> ['required','string','max:100'],
         
         ];
     }
