@@ -55,6 +55,8 @@ Cuenta con las siguientes secciones:
 
 ![reultado encuesta parte 1](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/resultado-ecuesta-1.JPG)
 ![reultado encuesta parte 2](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/resultado-ecuesta-2.JPG)
+## Pdf
+![reultado encuesta pdf](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/pdf.JPG)
 
 ## PERFIL DE USUARIO:
 
