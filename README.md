@@ -1,22 +1,24 @@
 # SEE-ADMIN
 
 **SISTEMA DE ENCUESTAS Y ESTADISTICAS - Gestion administrativa.**
-```
+
 Aplicacion web para que los alumnos de una institucion realizen encuestas de manera anonima con respecto a la eficiencia de las materias que cursan.
+
 
 Esta aplicacion esta hecha para gestionar la carga de datos, se realizo una aplicacion a parte para que los estudiantes puedan ingresar y realizar sus encuestas, dicha aplicacion se conecta y recibe los datos a traves de una API.
 Puede ver los detalles de la misma en el siguiente link: [Sistema de encuestas y estadisticas - Alumnos ](https://github.com/Belen-Sosa/SeeLaravelVueStudents)
 
 **El planteo del proyecto e idea no es propio, la solucion planteada con estas tecnologías si.**
-```
-```
+
 Algunas tecnologías y paquetes utilizados:
+
 **Laravel | Laravel Jetstream | Inertia | Spatie | Vue3 | Vue-Icons | Tailwind CSS | CSS | JsPDF | html2canvas | Patron MVC |...**
-```
-```
+
+
 Cuenta con las siguientes secciones:
+
 (imagenes generales, cada modulo posee sus pantallas de cargas, detalles, etc.)
-```
+
 ## LOGIN:
 
 ![inicio login ](https://github.com/Belen-Sosa/SeeLaravelVueAdmin/blob/main/imgs-git/inicio.JPG)
