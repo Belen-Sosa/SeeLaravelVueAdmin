@@ -1,5 +1,5 @@
 <script setup>
-import Modal from './ModalAlert.vue';
+import Modal from './Modal.vue';
 
 const emit = defineEmits(['close']);
 

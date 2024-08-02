@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\Career;
 use App\Models\Registration;
-use App\Models\Subject;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+
 
 use Spatie\Permission\Models\Role;
 
@@ -46,7 +44,6 @@ class StudentController extends Controller
        
         $careers= Career::all();
         $subjects= Career::with('subjects')->get();
-   
         
         return inertia('Students/create',['role'=>'student','careers'=>$careers,'subjects'=>$subjects]);
     }
@@ -65,15 +62,8 @@ class StudentController extends Controller
         $validatedData['password'] = Hash::make($validatedData['password']);
 
 
-        Log::info("validatedData");
-        Log::info($validatedData);
-      
-
-       
-
-
         //creamos el usuario 
-         $user = User::create(  $validatedData )->assignRole('student');
+        $user = User::create(  $validatedData )->assignRole('student');
 
           
          
@@ -93,13 +83,7 @@ class StudentController extends Controller
         return redirect()->route('students.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -128,8 +112,6 @@ class StudentController extends Controller
 {
     // Obtén la información del estudiante con su carrera relacionada
     $student = User::with('career')->findOrFail($id);
-    Log::info('student');
-    Log::info($student);
 
     // Obtén todas las materias de la carrera del estudiante
     $career = Career::with('subjects')->findOrFail($student->career_id);
@@ -139,8 +121,6 @@ class StudentController extends Controller
         ->where('user_id', $student->id)
         ->get();
 
-    Log::info('$registrations');
-    Log::info($registrations);
 
     // Obtener los IDs de las materias en las que el estudiante está inscrito
     $registeredSubjectIds = $registrations->pluck('subject.id')->toArray();
@@ -150,8 +130,6 @@ class StudentController extends Controller
         return in_array($subject->id, $registeredSubjectIds);
     });
 
-    Log::info('$availableSubjects');
-    Log::info($availableSubjects);
 
     return inertia('Students/editSubjects', [
         'student' => $student,

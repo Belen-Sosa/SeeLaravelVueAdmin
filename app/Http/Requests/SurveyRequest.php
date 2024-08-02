@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use DateTime;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
+
+
 
 class SurveyRequest extends FormRequest
 {
@@ -15,7 +15,7 @@ class SurveyRequest extends FormRequest
     protected function prepareForValidation()
     {
      
-        Log::info($this->all()); 
+    
         if( $this->isMethod('post') ){
             if ($this->has('final_date')) {
                 $this->merge([

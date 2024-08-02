@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherRequest;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
+
 
 class TeacherController extends Controller
 {
@@ -36,14 +36,7 @@ class TeacherController extends Controller
         return redirect()->route('teachers.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
+   
     /**
      * Show the form for editing the specified resource.
      */

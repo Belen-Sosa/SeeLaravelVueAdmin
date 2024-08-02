@@ -6,7 +6,7 @@ use App\Http\Requests\SubjectRequest;
 use App\Models\Career;
 use App\Models\Subject;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
+
 
 class SubjectController extends Controller
 {
@@ -19,9 +19,7 @@ class SubjectController extends Controller
     public function index()
     {
        
-
         $subjects = Subject::with(['career', 'teacher'])->paginate(self::NUMBER_OF_ITEMS_PER_PAGE); // Cambia 10 por el número de elementos que deseas por página
-
 
        return Inertia('Subjects/index', [
            'subjects' => $subjects
@@ -48,13 +46,7 @@ class SubjectController extends Controller
         return redirect()->route('subjects.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+   
 
     /**
      * Show the form for editing the specified resource.

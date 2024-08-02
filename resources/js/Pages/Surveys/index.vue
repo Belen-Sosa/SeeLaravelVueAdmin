@@ -34,12 +34,6 @@ const toggleDropdown = (surveyId) => {
 
 
 
-const updateState = (id, newState) => {
-    if (confirm('¿Desea modificar el estado de esta encuesta?')) {
-        Inertia.put(route('surveys.updateState', id), { estate: newState });
-    }
-};
-
 
 
 
@@ -47,29 +41,28 @@ const showConfirm = ref(false);
 const confirmMessage = ref('');
 let survey_id = null;
 let newState= null;
+const updateState = (id, newState) => {
+    if (confirm('¿Desea modificar el estado de esta encuesta?')) {
+        Inertia.put(route('surveys.updateState', id), { estate: newState });
+    }
+};
 
 const confirmDelete = (id) => {
 confirmMessage.value = '¿Desea eliminar esta encuesta?';
+
 survey_id = id;
+
 showConfirm.value = true;
 };
 
 
-const confirmUpdateState = (id,state) => {
-confirmMessage.value = '¿Desea cambiar de estado?';
-survey_id = id;
-newState = state
-showConfirm.value = true;
-};
 
 const confirmAction = () => {
+    console.log("id", survey_id)
 Inertia.delete(route('surveys.destroy', survey_id));
 showConfirm.value = false;
 };
-const confirmActionState = () => {
-    Inertia.put(route('surveys.updateState', survey_id), { estate: newState });
-showConfirm.value = false;
-};
+
 </script>
 
 <template>
@@ -90,7 +83,7 @@ showConfirm.value = false;
                     <div v-if="props.message" class="mt-4 p-4 bg-green-100 text-green-800 rounded">
                         {{ props.message }}
                     </div>
-                    <div class="mt-4 overflow-auto">
+                    <div class="mt-4 ">
                         <table class="divide-y divide-gray-300 min-w-full text-left text-sm font-light text-surface">
                             <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
                                 <tr>
@@ -133,8 +126,8 @@ showConfirm.value = false;
                                                 <div class="py-1">
                                          
                                                     <a :href="route('questions.show', survey.id)" v-if="$page.props.user.permissions.includes('create question')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Agregar Preguntas</a>
-                                                    <a href="#" @click=" confirmUpdateState(survey.id, 1)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Publicar</a>
-                                                    <a href="#" @click="confirmUpdateState(survey.id, 0)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Finalizar</a>
+                                                    <a href="#" @click=" updateState(survey.id, 1)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Publicar</a>
+                                                    <a href="#" @click="updateState(survey.id, 0)" v-if="$page.props.user.permissions.includes('update survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Finalizar</a>
                                                     <a :href="route('surveys.show', survey.id)" v-if="$page.props.user.permissions.includes('create survey')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Vista Previa</a>
                                                     <a :href="route('result.show', survey.id)" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Resultados</a>
                                                 </div>
@@ -155,7 +148,7 @@ showConfirm.value = false;
                 </div>
             </div>
             <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmAction" @close="showConfirm = false" />
-            <Modal v-if="showConfirm" :message="confirmMessage" @confirm="confirmActionState" @close="showConfirm = false" />
+       
             
         </div>
     </AppLayout>
@@ -169,4 +162,21 @@ showConfirm.value = false;
         background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
     }
 }
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+    overflow: visible; /* Asegura que el contenido no se recorte */
+    max-height: none; /* Asegura que el menú se expanda según su contenido */
+    width: 14rem; /* Ajusta el ancho del menú */
+}
+
 </style>

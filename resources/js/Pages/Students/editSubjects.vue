@@ -46,9 +46,7 @@ const addSubject = (subjectId) => {
     const studentId = props.student.id;
 
     if (studentId && careerId && subjectId) {
-        console.log('Student ID:', studentId);
-        console.log('Career ID:', careerId);
-        console.log('Subject ID:', subjectId);
+   
         Inertia.post(route('students.addSubjects', {
             id: studentId,
             career_id: careerId,

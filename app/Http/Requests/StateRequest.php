@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
+
 
 class StateRequest extends FormRequest
 {
@@ -21,7 +20,7 @@ class StateRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {   Log::info('entramos aca en state request');
+    {  
 
         return [
             'estate' => ['required', 'integer', 'in:0,1']
