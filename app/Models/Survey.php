@@ -28,9 +28,9 @@ class Survey extends Model
        }
 
     //una encuesta puede tener muchos usuarios 
-    public function user()
+    public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'survey_users', 'id_survey', 'id_user');
     }
     //una encuesta pertenece a una carrera 
     public function career()

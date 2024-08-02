@@ -9,6 +9,9 @@
             <div class="flex justify-between" v-if="$page.props.user.permissions.includes('create career')">
               <Link :href="route('careers.create')" class="button-add">Agregar Carrera</Link>
             </div>
+            <div v-if="props.message" class="mt-4 p-4 bg-green-100 text-green-800 rounded">
+                        {{ props.message }}
+                    </div>
   
             <div class="mt-4">
               <ul role="list" class="divide-y divide-gray-300">
@@ -52,10 +55,14 @@
   import { Inertia } from '@inertiajs/inertia';
   import { ref } from 'vue';
   
-  defineProps({
+  const props = defineProps({
     careers: {
       type: Object,
       required: true
+    },
+    message: {
+        type: String,
+        required: false
     }
   });
   

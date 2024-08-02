@@ -19,9 +19,9 @@ return new class extends Migration
             $table->timestamps();
 
             
-            $table->foreign('survey_id')->references('id')->on('surveys')->onDelete('cascade');
+            $table->foreign('survey_id')->references('id')->on('surveys');
             
-            $table->foreign('type_question_id')->references('id')->on('type_questions')->onDelete('cascade');;
+            $table->foreign('type_question_id')->references('id')->on('type_questions');
         });
     }
 

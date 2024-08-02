@@ -10,15 +10,17 @@ use Illuminate\Http\Request;
 
 class ApiSurveyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index() 
+        public function index($id)
     {
-        
-        $surveys = Survey::where('estate', 1)->get();
-       
-       return response()->json($surveys,200);
+        // Obtener las encuestas que el usuario no tiene registradas en la tabla survey_user
+        $surveys = Survey::where('estate', 1)
+            ->whereDoesntHave('users', function ($query) use ($id) {
+                $query->where('id_user', $id);
+            })
+            ->with('subject')
+            ->get();
+
+        return response()->json($surveys, 200);
     }
 
     /**
@@ -44,21 +46,7 @@ class ApiSurveyController extends Controller
          return response()->json($survey,200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+  
 
    
 }

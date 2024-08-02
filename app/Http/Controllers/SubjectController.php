@@ -6,7 +6,7 @@ use App\Http\Requests\SubjectRequest;
 use App\Models\Career;
 use App\Models\Subject;
 use App\Models\Teacher;
-
+use Illuminate\Support\Facades\Log;
 
 class SubjectController extends Controller
 {
@@ -20,7 +20,7 @@ class SubjectController extends Controller
     {
        
         $subjects = Subject::with(['career', 'teacher'])->paginate(self::NUMBER_OF_ITEMS_PER_PAGE); // Cambia 10 por el número de elementos que deseas por página
-
+       Log::info($subjects);
        return Inertia('Subjects/index', [
            'subjects' => $subjects
        ]);

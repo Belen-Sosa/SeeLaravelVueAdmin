@@ -14,6 +14,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Define las rutas con middleware 'auth:sanctum' fuera del closure
 Route::middleware('auth:sanctum')->group(function () {
+    
     Route::resource('api_surveys', ApiSurveyController::class);
+    
+    Route::get('/api_surveys_user/{id}', [ApiSurveyController::class, 'index']);
+      
+    Route::get('/api/api_surveys/{id}', [ApiSurveyController::class, 'show']);
+
+
     Route::resource('results', ApiResultController::class);
+    Route::post('/api_results/{id_user}/{id_survey}', [ApiResultController::class, 'store_survey']);
 });
