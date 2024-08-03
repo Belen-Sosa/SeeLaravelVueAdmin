@@ -12,7 +12,7 @@ Puede ver los detalles de la misma en el siguiente link: [Sistema de encuestas y
 
 Algunas tecnologías y paquetes utilizados:
 
-**Laravel | Laravel Jetstream | Inertia | Spatie | Vue3 | Vue-Icons | Tailwind CSS | CSS | JsPDF | html2canvas | MySql| Patron MVC |...**
+**Laravel | Laravel Jetstream | Inertia | Spatie | Vue3 | Vue-Icons | JavaScript | Tailwind CSS | CSS | JsPDF | html2canvas | MySql| Patron MVC |...**
 
 
 Cuenta con las siguientes secciones:
